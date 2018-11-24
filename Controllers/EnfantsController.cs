@@ -35,7 +35,9 @@ namespace Test.Controllers
 
             var enfant = await _context.Enfants
                 .Include(e => e.Groupe)
+                .Include(e => e.Groupe.TypeGroupe)
                 .Include(e => e.InventaireEnfant)
+                .Include(e => e.Personne)
                 .FirstOrDefaultAsync(m => m.EnfantId == id);
             if (enfant == null)
             {

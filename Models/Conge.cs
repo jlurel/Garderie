@@ -12,7 +12,7 @@ namespace Garderie.Models
         public byte? Visible { get; set; }
         public int DossierEmployeId { get; set; }
 
-        public DossiersEmploye DossierEmploye { get; set; }
-        public TypesConges TypeConge { get; set; }
+        public DossierEmploye DossierEmploye { get; set; }
+        public TypeConge TypeConge { get; set; }
     }
 }

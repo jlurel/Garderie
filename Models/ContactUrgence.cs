@@ -8,7 +8,7 @@ namespace Garderie.Models
     {
         public ContactUrgence()
         {
-            DossiersContactUrgence = new HashSet<DossiersContactUrgence>();
+            DossiersContactUrgence = new HashSet<DossierContactUrgence>();
         }
 
         [ForeignKey(nameof(Personne))]
@@ -16,6 +16,6 @@ namespace Garderie.Models
         public string Telephone { get; set; }
 
         public Personne Contact { get; set; }
-        public ICollection<DossiersContactUrgence> DossiersContactUrgence { get; set; }
+        public ICollection<DossierContactUrgence> DossiersContactUrgence { get; set; }
     }
 }

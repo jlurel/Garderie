@@ -9,10 +9,10 @@ namespace Garderie.Models
         public Employe()
         {
             Calendriers = new HashSet<Calendrier>();
-            DossiersEmploye = new HashSet<DossiersEmploye>();
-            EmployeGroupes = new HashSet<EmployeGroupes>();
-            Groupes = new HashSet<Groupes>();
-            Inventaires = new HashSet<Inventaires>();
+            DossiersEmploye = new HashSet<DossierEmploye>();
+            EmployeGroupes = new HashSet<EmployeGroupe>();
+            Groupes = new HashSet<Groupe>();
+            Inventaires = new HashSet<Inventaire>();
         }
 
         [ForeignKey(nameof(Personne))]
@@ -23,9 +23,9 @@ namespace Garderie.Models
 
         public Personne Personne { get; set; }
         public ICollection<Calendrier> Calendriers { get; set; }
-        public ICollection<DossiersEmploye> DossiersEmploye { get; set; }
-        public ICollection<EmployeGroupes> EmployeGroupes { get; set; }
-        public ICollection<Groupes> Groupes { get; set; }
-        public ICollection<Inventaires> Inventaires { get; set; }
+        public ICollection<DossierEmploye> DossiersEmploye { get; set; }
+        public ICollection<EmployeGroupe> EmployeGroupes { get; set; }
+        public ICollection<Groupe> Groupes { get; set; }
+        public ICollection<Inventaire> Inventaires { get; set; }
     }
 }

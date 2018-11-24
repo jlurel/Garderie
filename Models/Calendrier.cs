@@ -7,7 +7,7 @@ namespace Garderie.Models
     {
         public Calendrier()
         {
-            Horaires = new HashSet<Horaires>();
+            Horaires = new HashSet<Horaire>();
         }
 
         public int CalendrierId { get; set; }
@@ -17,6 +17,6 @@ namespace Garderie.Models
         public byte? Visible { get; set; }
 
         public Employe Employe { get; set; }
-        public ICollection<Horaires> Horaires { get; set; }
+        public ICollection<Horaire> Horaires { get; set; }
     }
 }

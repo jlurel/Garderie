@@ -7,12 +7,12 @@ namespace Garderie.Models
     {
         public TypesGroupe()
         {
-            Groupes = new HashSet<Groupes>();
+            Groupes = new HashSet<Groupe>();
         }
 
         public int TypeGroupeId { get; set; }
         public string Libelle { get; set; }
 
-        public ICollection<Groupes> Groupes { get; set; }
+        public ICollection<Groupe> Groupes { get; set; }
     }
 }

@@ -8,9 +8,9 @@ namespace Garderie.Models
     {
         public Enfant()
         {
-            DossiersInscription = new HashSet<DossiersInscription>();
-            Filiations = new HashSet<Filiations>();
-            Traitements = new HashSet<Traitements>();
+            DossiersInscription = new HashSet<DossierInscription>();
+            Filiations = new HashSet<Filiation>();
+            Traitements = new HashSet<Traitement>();
         }
 
         [ForeignKey(nameof(Personne))]
@@ -20,10 +20,10 @@ namespace Garderie.Models
         public int InventaireEnfantId { get; set; }
 
         public Personne Personne { get; set; }
-        public Groupes Groupe { get; set; }
-        public InventairesEnfant InventaireEnfant { get; set; }
-        public ICollection<DossiersInscription> DossiersInscription { get; set; }
-        public ICollection<Filiations> Filiations { get; set; }
-        public ICollection<Traitements> Traitements { get; set; }
+        public Groupe Groupe { get; set; }
+        public InventaireEnfant InventaireEnfant { get; set; }
+        public ICollection<DossierInscription> DossiersInscription { get; set; }
+        public ICollection<Filiation> Filiations { get; set; }
+        public ICollection<Traitement> Traitements { get; set; }
     }
 }

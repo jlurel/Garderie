@@ -8,8 +8,8 @@ namespace Garderie.Models
     {
         public Parent()
         {
-            Filiations = new HashSet<Filiations>();
-            ParentsFactures = new HashSet<ParentsFactures>();
+            Filiations = new HashSet<Filiation>();
+            ParentsFactures = new HashSet<ParentFacture>();
         }
 
         [ForeignKey(nameof(Personne))]
@@ -18,7 +18,7 @@ namespace Garderie.Models
         public string Telephone { get; set; }
 
         public Personne Personne { get; set; }
-        public ICollection<Filiations> Filiations { get; set; }
-        public ICollection<ParentsFactures> ParentsFactures { get; set; }
+        public ICollection<Filiation> Filiations { get; set; }
+        public ICollection<ParentFacture> ParentsFactures { get; set; }
     }
 }

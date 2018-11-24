@@ -7,8 +7,8 @@ namespace Garderie.Models
     {
         public Activite()
         {
-            ObjetsFacturables = new HashSet<ObjetsFacturables>();
-            Participation = new HashSet<Participation>();
+            ObjetsFacturables = new HashSet<ObjetFacturable>();
+            Participations = new HashSet<Participation>();
         }
 
         public int ActiviteId { get; set; }
@@ -18,7 +18,7 @@ namespace Garderie.Models
         public string Lieu { get; set; }
         public byte? Visible { get; set; }
 
-        public ICollection<ObjetsFacturables> ObjetsFacturables { get; set; }
-        public ICollection<Participation> Participation { get; set; }
+        public ICollection<ObjetFacturable> ObjetsFacturables { get; set; }
+        public ICollection<Participation> Participations { get; set; }
     }
 }

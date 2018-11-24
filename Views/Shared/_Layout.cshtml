@@ -17,35 +17,82 @@
         </environment>
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+                        <span class="hamb-top"></span>
+                        <span class="hamb-middle"></span>
+                        <span class="hamb-bottom"></span>
                     </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Garderie</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    </ul>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input placeholder="Identifiant" type="text" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <input placeholder="Mot de passe" type="text" class="form-control" />
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Valider">
+                    </form>
                 </div>
             </div>
         </nav>
+        <div id="wrapper">
+            <div id="overlay"></div>
 
-        <partial name="_CookieConsentPartial" />
+            <nav class="navbar navbar-default navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                <ul class="nav sidebar-nav">
+                    <li class="sidebar-brand m-auto">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="text-center">
+                            <img alt="Brand" class="img-responsive" src="~/images/icons8-finn.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inscription <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header d-none"></li>
+                            <li><a asp-area="" asp-controller="Enfants" asp-action="Create">Nouveau</a></li>
+                            <li><a asp-area="" asp-controller="Enfants" asp-action="Index">Réinscription</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="" asp-action="">Planning</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Inventaire<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header d-none"></li>
+                            <li><a asp-area="" asp-controller="" asp-action="">Articles</a></li>
+                            <li><a asp-area="" asp-controller="" asp-action="">Categories</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Facturation<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header d-none"></li>
+                            <li><a asp-area="" asp-controller="" asp-action="">Factures</a></li>
+                            <li><a asp-area="" asp-controller="" asp-action="">Another action</a></li>
+                        </ul>
+                    </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">À propos</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+            </nav>
 
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; 2018 - Garderie</p>
-            </footer>
+            <partial name="_CookieConsentPartial" />
+
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; 2018 - Garderie</p>
+                </footer>
+            </div>
         </div>
 
         <environment include="Development">
@@ -66,7 +113,7 @@
                     crossorigin="anonymous"
                     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
             </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
         </environment>
 
         @RenderSection("Scripts", required: false)

@@ -16,7 +16,7 @@ namespace Garderie.Models
         public int CategorieId { get; set; }
 
         public CategorieArticle Categorie { get; set; }
-        public InventairesEnfant EnfantInventaire { get; set; }
-        public Inventaires Inventaire { get; set; }
+        public InventaireEnfant EnfantInventaire { get; set; }
+        public Inventaire Inventaire { get; set; }
     }
 }

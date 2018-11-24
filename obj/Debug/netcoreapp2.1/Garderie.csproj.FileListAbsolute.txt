@@ -47,3 +47,13 @@
 /Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/bin/Debug/netcoreapp2.1/Garderie.Views.pdb
 /Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Garderie.Views.pdb
 /Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Garderie.csproj.CopyComplete
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/Groupes/Create.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/Groupes/Delete.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/Groupes/Details.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/Groupes/Edit.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/Groupes/Index.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/TypesGroupe/Create.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/TypesGroupe/Delete.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/TypesGroupe/Details.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/TypesGroupe/Edit.g.cshtml.cs
+/Users/Katsuo/Code/VisualStudioProjects/Garderie/Garderie/obj/Debug/netcoreapp2.1/Razor/Views/TypesGroupe/Index.g.cshtml.cs

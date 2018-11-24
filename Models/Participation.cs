@@ -12,7 +12,7 @@ namespace Garderie.Models
         public byte Visible { get; set; }
 
         public Activite Activite { get; set; }
-        public Groupes Groupe { get; set; }
-        public Lieux Salle { get; set; }
+        public Groupe Groupe { get; set; }
+        public Lieu Salle { get; set; }
     }
 }

@@ -24,34 +24,34 @@ namespace Garderie.Models
         public virtual DbSet<Conge> Conges { get; set; }
         public virtual DbSet<ContactUrgence> ContactsUrgence { get; set; }
         public virtual DbSet<DocumentOfficiel> DocumentsOfficiels { get; set; }
-        public virtual DbSet<DossiersContactUrgence> DossiersContactUrgence { get; set; }
-        public virtual DbSet<DossiersEmploye> DossiersEmploye { get; set; }
-        public virtual DbSet<DossiersInscription> DossiersInscription { get; set; }
-        public virtual DbSet<EmployeGroupes> EmployeGroupes { get; set; }
+        public virtual DbSet<DossierContactUrgence> DossiersContactUrgence { get; set; }
+        public virtual DbSet<DossierEmploye> DossiersEmploye { get; set; }
+        public virtual DbSet<DossierInscription> DossiersInscription { get; set; }
+        public virtual DbSet<EmployeGroupe> EmployeGroupes { get; set; }
         public virtual DbSet<Employe> Employes { get; set; }
         public virtual DbSet<Enfant> Enfants { get; set; }
-        public virtual DbSet<Factures> Factures { get; set; }
-        public virtual DbSet<FichesPaye> FichesPaye { get; set; }
-        public virtual DbSet<Filiations> Filiations { get; set; }
-        public virtual DbSet<Groupes> Groupes { get; set; }
-        public virtual DbSet<Horaires> Horaires { get; set; }
-        public virtual DbSet<Inventaires> Inventaires { get; set; }
-        public virtual DbSet<InventairesEnfant> InventairesEnfant { get; set; }
-        public virtual DbSet<Lieux> Lieux { get; set; }
-        public virtual DbSet<LignesFactures> LignesFactures { get; set; }
-        public virtual DbSet<Maladies> Maladies { get; set; }
-        public virtual DbSet<ObjetsFacturables> ObjetsFacturables { get; set; }
+        public virtual DbSet<Facture> Factures { get; set; }
+        public virtual DbSet<FichePaye> FichesPaye { get; set; }
+        public virtual DbSet<Filiation> Filiations { get; set; }
+        public virtual DbSet<Groupe> Groupes { get; set; }
+        public virtual DbSet<Horaire> Horaires { get; set; }
+        public virtual DbSet<Inventaire> Inventaires { get; set; }
+        public virtual DbSet<InventaireEnfant> InventairesEnfant { get; set; }
+        public virtual DbSet<Lieu> Lieux { get; set; }
+        public virtual DbSet<LigneFacture> LignesFactures { get; set; }
+        public virtual DbSet<Maladie> Maladies { get; set; }
+        public virtual DbSet<ObjetFacturable> ObjetsFacturables { get; set; }
         public virtual DbSet<Parent> Parents { get; set; }
-        public virtual DbSet<ParentsFactures> ParentsFactures { get; set; }
+        public virtual DbSet<ParentFacture> ParentsFactures { get; set; }
         public virtual DbSet<Participation> Participation { get; set; }
         public virtual DbSet<PersonneAdresse> PersonneAdresses { get; set; }
         public virtual DbSet<Personne> Personnes { get; set; }
         public virtual DbSet<RapportJournalier> RapportJournalier { get; set; }
-        public virtual DbSet<StatutsFacture> StatutsFacture { get; set; }
-        public virtual DbSet<Traitements> Traitements { get; set; }
-        public virtual DbSet<Tvas> Tvas { get; set; }
-        public virtual DbSet<TypesConges> TypesConges { get; set; }
-        public virtual DbSet<TypesContrat> TypesContrat { get; set; }
+        public virtual DbSet<StatutFacture> StatutsFacture { get; set; }
+        public virtual DbSet<Traitement> Traitements { get; set; }
+        public virtual DbSet<Tva> Tvas { get; set; }
+        public virtual DbSet<TypeConge> TypesConges { get; set; }
+        public virtual DbSet<TypeContrat> TypesContrat { get; set; }
         public virtual DbSet<TypesGroupe> TypesGroupe { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -239,7 +239,7 @@ namespace Garderie.Models
                     .HasConstraintName("DocumentsOfficiels_DossiersInscription_FK");
             });
 
-            modelBuilder.Entity<DossiersContactUrgence>(entity =>
+            modelBuilder.Entity<DossierContactUrgence>(entity =>
             {
                 entity.HasKey(e => e.DossierContactUrgenceId);
 
@@ -263,7 +263,7 @@ namespace Garderie.Models
                     .HasConstraintName("DossiersContactUrgence_DossiersInscription_FK");
             });
 
-            modelBuilder.Entity<DossiersEmploye>(entity =>
+            modelBuilder.Entity<DossierEmploye>(entity =>
             {
                 entity.HasKey(e => e.DossierId);
 
@@ -284,7 +284,7 @@ namespace Garderie.Models
                     .HasConstraintName("DossiersEmploye_TypesContrat_FK");
             });
 
-            modelBuilder.Entity<DossiersInscription>(entity =>
+            modelBuilder.Entity<DossierInscription>(entity =>
             {
                 entity.HasKey(e => e.DossierId);
 
@@ -303,7 +303,7 @@ namespace Garderie.Models
                     .HasConstraintName("DossiersInscription_Enfants_FK");
             });
 
-            modelBuilder.Entity<EmployeGroupes>(entity =>
+            modelBuilder.Entity<EmployeGroupe>(entity =>
             {
                 entity.HasKey(e => new { e.GroupeId, e.EmployeId });
 
@@ -358,7 +358,7 @@ namespace Garderie.Models
                     .HasConstraintName("Enfants_InventairesEnfant_FK");
             });
 
-            modelBuilder.Entity<Factures>(entity =>
+            modelBuilder.Entity<Facture>(entity =>
             {
                 entity.HasKey(e => e.FactureId);
 
@@ -377,7 +377,7 @@ namespace Garderie.Models
                     .HasConstraintName("Factures_StatutsFacture_FK");
             });
 
-            modelBuilder.Entity<FichesPaye>(entity =>
+            modelBuilder.Entity<FichePaye>(entity =>
             {
                 entity.HasKey(e => e.FichePayeId);
 
@@ -390,7 +390,7 @@ namespace Garderie.Models
                     .HasConstraintName("FichesPaye_DossiersEmploye_FK");
             });
 
-            modelBuilder.Entity<Filiations>(entity =>
+            modelBuilder.Entity<Filiation>(entity =>
             {
                 entity.HasKey(e => new { e.ParentId, e.EnfantId });
 
@@ -411,7 +411,7 @@ namespace Garderie.Models
                     .HasConstraintName("Filiations_Parents_FK");
             });
 
-            modelBuilder.Entity<Groupes>(entity =>
+            modelBuilder.Entity<Groupe>(entity =>
             {
                 entity.HasKey(e => e.GroupeId);
 
@@ -431,20 +431,20 @@ namespace Garderie.Models
                     .HasConstraintName("Groupes_TypesGroupe_FK");
             });
 
-            modelBuilder.Entity<Horaires>(entity =>
+            modelBuilder.Entity<Horaire>(entity =>
             {
                 entity.HasKey(e => new { e.HoraireId, e.CalendrierId });
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
-                entity.HasOne(d => d.Calendriers)
+                entity.HasOne(d => d.Calendrier)
                     .WithMany(p => p.Horaires)
                     .HasForeignKey(d => new { d.CalendrierId, d.EmployeId })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Horaires_Calendriers_FK");
             });
 
-            modelBuilder.Entity<Inventaires>(entity =>
+            modelBuilder.Entity<Inventaire>(entity =>
             {
                 entity.HasKey(e => e.InventaireId);
 
@@ -457,14 +457,14 @@ namespace Garderie.Models
                     .HasConstraintName("Inventaires_Employes_FK");
             });
 
-            modelBuilder.Entity<InventairesEnfant>(entity =>
+            modelBuilder.Entity<InventaireEnfant>(entity =>
             {
                 entity.HasKey(e => e.InventaireId);
 
                 entity.Property(e => e.InventaireId).ValueGeneratedOnAdd();
             });
 
-            modelBuilder.Entity<Lieux>(entity =>
+            modelBuilder.Entity<Lieu>(entity =>
             {
                 entity.HasKey(e => e.SalleId);
 
@@ -475,7 +475,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<LignesFactures>(entity =>
+            modelBuilder.Entity<LigneFacture>(entity =>
             {
                 entity.HasKey(e => new { e.LigneId, e.FactureId });
 
@@ -490,7 +490,7 @@ namespace Garderie.Models
                     .HasConstraintName("LignesFactures_ObjetsFacturables_FK");
             });
 
-            modelBuilder.Entity<Maladies>(entity =>
+            modelBuilder.Entity<Maladie>(entity =>
             {
                 entity.HasKey(e => e.MaladieId);
 
@@ -503,7 +503,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ObjetsFacturables>(entity =>
+            modelBuilder.Entity<ObjetFacturable>(entity =>
             {
                 entity.HasKey(e => e.ObjetFacturableId);
 
@@ -540,7 +540,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ParentsFactures>(entity =>
+            modelBuilder.Entity<ParentFacture>(entity =>
             {
                 entity.HasKey(e => new { e.FactureId, e.ParentId });
 
@@ -564,7 +564,7 @@ namespace Garderie.Models
                 entity.Property(e => e.Date).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Activite)
-                    .WithMany(p => p.Participation)
+                    .WithMany(p => p.Participations)
                     .HasForeignKey(d => d.ActiviteId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Participation_Activites_FK");
@@ -647,7 +647,7 @@ namespace Garderie.Models
                     .HasConstraintName("RapportJournalier_DossiersInscription_FK");
             });
 
-            modelBuilder.Entity<StatutsFacture>(entity =>
+            modelBuilder.Entity<StatutFacture>(entity =>
             {
                 entity.HasKey(e => e.StatutFactureId);
 
@@ -659,7 +659,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Traitements>(entity =>
+            modelBuilder.Entity<Traitement>(entity =>
             {
                 entity.HasKey(e => new { e.MaladieId, e.EnfantId });
 
@@ -688,7 +688,7 @@ namespace Garderie.Models
                     .HasConstraintName("Traitements_Maladies_FK");
             });
 
-            modelBuilder.Entity<Tvas>(entity =>
+            modelBuilder.Entity<Tva>(entity =>
             {
                 entity.HasKey(e => e.Tvaid);
 
@@ -703,7 +703,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TypesConges>(entity =>
+            modelBuilder.Entity<TypeConge>(entity =>
             {
                 entity.HasKey(e => e.TypeCongeId);
 
@@ -714,7 +714,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TypesContrat>(entity =>
+            modelBuilder.Entity<TypeContrat>(entity =>
             {
                 entity.HasKey(e => e.TypeContratId);
 

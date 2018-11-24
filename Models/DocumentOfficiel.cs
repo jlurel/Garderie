@@ -11,6 +11,6 @@ namespace Garderie.Models
         public int DossierId { get; set; }
         public byte? Visible { get; set; }
 
-        public DossiersInscription Dossier { get; set; }
+        public DossierInscription Dossier { get; set; }
     }
 }

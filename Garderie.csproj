@@ -6,14 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Controllers\MoviesController.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Views\Movies\Create.cshtml" />
-    <Content Remove="Views\Movies\Delete.cshtml" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
   </ItemGroup>
 </Project>
