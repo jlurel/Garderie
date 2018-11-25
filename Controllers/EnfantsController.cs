@@ -21,8 +21,12 @@ namespace Test.Controllers
         // GET: Enfants
         public async Task<IActionResult> Index()
         {
-            var bloggingContext = _context.Enfants.Include(e => e.Groupe).Include(e => e.InventaireEnfant).Include(e => e.Personne);
-            return View(await bloggingContext.ToListAsync());
+            var garderieContext = _context.Enfants
+                                          .Include(e => e.Groupe)
+                                          .Include(e => e.Groupe.TypeGroupe)
+                                          .Include(e => e.InventaireEnfant)
+                                          .Include(e => e.Personne);
+            return View(await garderieContext.ToListAsync());
         }
 
         // GET: Enfants/Details/5
