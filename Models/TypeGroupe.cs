@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Garderie.Models
 {
-    public partial class TypesGroupe
+    public partial class TypeGroupe
     {
-        public TypesGroupe()
+        public TypeGroupe()
         {
             Groupes = new HashSet<Groupe>();
         }

@@ -52,7 +52,7 @@ namespace Garderie.Models
         public virtual DbSet<Tva> Tvas { get; set; }
         public virtual DbSet<TypeConge> TypesConges { get; set; }
         public virtual DbSet<TypeContrat> TypesContrat { get; set; }
-        public virtual DbSet<TypesGroupe> TypesGroupe { get; set; }
+        public virtual DbSet<TypeGroupe> TypesGroupe { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -725,7 +725,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TypesGroupe>(entity =>
+            modelBuilder.Entity<TypeGroupe>(entity =>
             {
                 entity.HasKey(e => e.TypeGroupeId);
 

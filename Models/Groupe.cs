@@ -19,7 +19,7 @@ namespace Garderie.Models
         public int TypeGroupeId { get; set; }
 
         public Employe Referant { get; set; }
-        public TypesGroupe TypeGroupe { get; set; }
+        public TypeGroupe TypeGroupe { get; set; }
         public ICollection<EmployeGroupe> EmployeGroupes { get; set; }
         public ICollection<Enfant> Enfants { get; set; }
         public ICollection<Participation> Participation { get; set; }

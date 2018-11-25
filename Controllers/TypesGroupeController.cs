@@ -53,7 +53,7 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TypeGroupeId,Libelle")] TypesGroupe typesGroupe)
+        public async Task<IActionResult> Create([Bind("TypeGroupeId,Libelle")] TypeGroupe typesGroupe)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TypeGroupeId,Libelle")] TypesGroupe typesGroupe)
+        public async Task<IActionResult> Edit(int id, [Bind("TypeGroupeId,Libelle")] TypeGroupe typesGroupe)
         {
             if (id != typesGroupe.TypeGroupeId)
             {
