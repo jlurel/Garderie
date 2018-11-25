@@ -224,7 +224,7 @@ using Garderie.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(1626, 61, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d522d570e4f6472e9088d22c36f41bd8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c4e28a31573949169964a3afec2645c2", async() => {
                 BeginContext(1679, 4, true);
                 WriteLiteral("Edit");
                 EndContext();
@@ -259,7 +259,7 @@ using Garderie.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(1695, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c7f119a7214e4ac480a3dc6765af7c9c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "99d54f25453649dfb69fa8b3f7e22e7e", async() => {
                 BeginContext(1717, 12, true);
                 WriteLiteral("Back to List");
                 EndContext();

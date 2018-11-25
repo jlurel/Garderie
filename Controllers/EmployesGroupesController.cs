@@ -21,7 +21,10 @@ namespace Garderie.Controllers
         // GET: EmployesGroupes
         public async Task<IActionResult> Index()
         {
-            var garderieContext = _context.EmployeGroupes.Include(e => e.Employe).Include(e => e.Groupe);
+            var garderieContext = _context.EmployeGroupes
+                                          .Include(e => e.Employe)
+                                          .Include(e => e.Employe.Personne)
+                                          .Include(e => e.Groupe.TypeGroupe);
             return View(await garderieContext.ToListAsync());
         }
 
