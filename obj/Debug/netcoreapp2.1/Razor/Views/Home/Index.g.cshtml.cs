@@ -62,7 +62,7 @@ using Garderie.Models;
             WriteLiteral("\r\n<div class=\"jumbotron\">\r\n    <h1 class=\"text-center\">Bienvenue !</h1>\r\n    ");
             EndContext();
             BeginContext(120, 71, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "a69f20a7658a4ed0b22ae18b672869d4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "d390ca4edc6e4ef29ebfa91db0d15e3e", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();

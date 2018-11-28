@@ -1,0 +1,42 @@
+@model Garderie.Models.Inventaire
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Inventaire</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StockMax)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockMax)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockActuel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StockActuel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Visible)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Visible)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Employe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Employe.EmployeId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.InventaireId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
