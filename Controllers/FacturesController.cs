@@ -21,8 +21,10 @@ namespace Garderie.Controllers
         // GET: Factures
         public async Task<IActionResult> Index()
         {
-            var garderieContext = _context.Factures.Include(f => f.StatutFacture);
-            return View(await garderieContext.ToListAsync());
+            var factures = from f in _context.Factures.Include(f => f.StatutFacture)
+                           select f;
+            factures = factures.Where(f => f.Visible == 1);
+            return View(await factures.ToListAsync());
         }
 
         // GET: Factures/Details/5
