@@ -9,11 +9,11 @@ using Garderie.Models;
 
 namespace Garderie.Controllers
 {
-    public class FaichesPayeController : Controller
+    public class FichesPayeController : Controller
     {
         private readonly GarderieContext _context;
 
-        public FaichesPayeController(GarderieContext context)
+        public FichesPayeController(GarderieContext context)
         {
             _context = context;
         }
