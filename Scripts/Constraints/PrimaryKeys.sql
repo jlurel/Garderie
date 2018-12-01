@@ -43,9 +43,9 @@ ADD
 	CONSTRAINT PK__Document__1ABEEF0FF425F164 PRIMARY KEY (DocumentId); 
 GO
 
-ALTER TABLE DossiersContactUrgence
-ADD 
-    CONSTRAINT PK__Dossiers__F1E672BBE4CF75AB PRIMARY KEY (DossierContactUrgenceId);
+ALTER TABLE DossiersContactsUrgence
+ADD
+	CONSTRAINT PK__Dossiers__CABB1D90C28FE922 PRIMARY KEY (ContactId,DossierInscriptionId);
 GO
 
 ALTER TABLE DossiersEmploye

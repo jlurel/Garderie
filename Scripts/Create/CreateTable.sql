@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS Activites
 GO
 
 CREATE TABLE Activites (
-	ActiviteId int NOT NULL,
+	ActiviteId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Description varchar(255),
 	NbEnfantsMax int,
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS Adresses
 GO
 
 CREATE TABLE Adresses (
-	AdresseId int NOT NULL,
+	AdresseId int NOT NULL IDENTITY,
 	Ligne1 varchar(50),
 	Ligne2 varchar(50),
 	Ligne3 varchar(50),
@@ -41,7 +41,7 @@ DROP TABLE IF EXISTS Articles
 GO
 
 CREATE TABLE Articles (
-	ArticleId int NOT NULL,
+	ArticleId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Quantite int,
 	Photo varchar(255),
@@ -60,7 +60,7 @@ DROP TABLE IF EXISTS Calendriers
 GO
 
 CREATE TABLE Calendriers (
-	CalendrierId int NOT NULL,
+	CalendrierId int NOT NULL IDENTITY,
 	DateDebut date,
 	DateFin date,
 	EmployeId int NOT NULL,
@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS CategoriesArticle
 GO
 
 CREATE TABLE CategoriesArticle (
-	CategorieId int NOT NULL,
+	CategorieId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Visible tinyint
 );
@@ -88,7 +88,7 @@ DROP TABLE IF EXISTS ComptesUser
 GO
 
 CREATE TABLE ComptesUser (
-	UserId int NOT NULL,
+	UserId int NOT NULL IDENTITY,
 	Login varchar(45),
 	Password varchar(45),
 	Privilege tinyint NOT NULL,
@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS Conges
 GO
 
 CREATE TABLE Conges (
-	CongeId int NOT NULL,
+	CongeId int NOT NULL IDENTITY,
 	Debut date,
 	Duree int,
 	TypeCongeId int NOT NULL,
@@ -132,7 +132,7 @@ DROP TABLE IF EXISTS DocumentsOfficiels
 GO
 
 CREATE TABLE DocumentsOfficiels (
-	DocumentId int NOT NULL,
+	DocumentId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Url text,
 	DossierId int NOT NULL,
@@ -147,7 +147,6 @@ DROP TABLE IF EXISTS DossiersContactUrgence
 GO
 
 CREATE TABLE DossiersContactUrgence (
-	DossierContactUrgenceId int NOT NULL,
 	LienParente varchar(20) NOT NULL,
 	ContactId int NOT NULL,
 	Visible tinyint NOT NULL,
@@ -162,7 +161,7 @@ DROP TABLE IF EXISTS DossiersEmploye
 GO
 
 CREATE TABLE DossiersEmploye (
-	DossierId int NOT NULL,
+	DossierId int NOT NULL IDENTITY,
 	DateEntree date,
 	NbMoisAnciennete int,
 	TauxHoraireBrut float,
@@ -179,7 +178,7 @@ DROP TABLE IF EXISTS DossiersInscription
 GO
 
 CREATE TABLE DossiersInscription (
-	DossierId int NOT NULL,
+	DossierId int NOT NULL IDENTITY,
 	DateInscription date,
 	NbDemiJourneesInscrit int,
 	NbDemiJourneesAbsent int,
@@ -236,7 +235,7 @@ DROP TABLE IF EXISTS Factures
 GO
 
 CREATE TABLE Factures (
-	FactureId int NOT NULL,
+	FactureId int NOT NULL IDENTITY,
 	DateEmission date,
 	DatePaiement date,
 	MontantTTC float,
@@ -252,7 +251,7 @@ DROP TABLE IF EXISTS FichesPaye
 GO
 
 CREATE TABLE FichesPaye (
-	FichePayeId int NOT NULL,
+	FichePayeId int NOT NULL IDENTITY,
 	SalaireBrut float NOT NULL,
 	NbHeuresPrevu float NOT NULL,
 	NbHeuresReel float NOT NULL,
@@ -282,7 +281,7 @@ DROP TABLE IF EXISTS Groupes
 GO
 
 CREATE TABLE Groupes (
-	GroupeId int NOT NULL,
+	GroupeId int NOT NULL IDENTITY,
 	Descriptif text,
 	ReferantId int,
 	Visible tinyint,
@@ -297,7 +296,7 @@ DROP TABLE IF EXISTS Horaires
 GO
 
 CREATE TABLE Horaires (
-	HoraireId int NOT NULL,
+	HoraireId int NOT NULL IDENTITY,
 	[Date] date,
 	HeureDebut time(7),
 	HeureFin time(7),
@@ -314,7 +313,7 @@ DROP TABLE IF EXISTS Inventaires
 GO
 
 CREATE TABLE Inventaires (
-	InventaireId int NOT NULL,
+	InventaireId int NOT NULL IDENTITY,
 	StockMax int,
 	StockActuel int,
 	EmployeId int NOT NULL,
@@ -329,7 +328,7 @@ DROP TABLE IF EXISTS InventairesEnfant
 GO
 
 CREATE TABLE InventairesEnfant (
-	InventaireId int NOT NULL,
+	InventaireId int NOT NULL IDENTITY,
 	Visible tinyint
 ); 
 GO
@@ -341,7 +340,7 @@ DROP TABLE IF EXISTS Lieux
 GO
 
 CREATE TABLE Lieux (
-	SalleId int NOT NULL,
+	SalleId int NOT NULL IDENTITY,
 	Libelle varchar(50),
 	Occupe tinyint,
 	Visible tinyint
@@ -355,7 +354,7 @@ DROP TABLE IF EXISTS LignesFactures
 GO
 
 CREATE TABLE LignesFactures (
-	LigneId int NOT NULL,
+	LigneId int NOT NULL IDENTITY,
 	TotalHT float,
 	TotalTTC float,
 	Quantite int,
@@ -372,7 +371,7 @@ DROP TABLE IF EXISTS Maladies
 GO
 
 CREATE TABLE Maladies (
-	MaladieId int NOT NULL,
+	MaladieId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Descriptif text,
 	Visible tinyint
@@ -386,7 +385,7 @@ DROP TABLE IF EXISTS ObjetsFacturables
 GO
 
 CREATE TABLE ObjetsFacturables (
-	ObjetFacturableId int NOT NULL,
+	ObjetFacturableId int NOT NULL IDENTITY,
 	PrixHT float,
 	Nom varchar(45),
 	TVAId int NOT NULL,
@@ -428,7 +427,7 @@ DROP TABLE IF EXISTS Participation
 GO
 
 CREATE TABLE Participation (
-	[Date] date NOT NULL,
+	[Date] datetime NOT NULL,
 	ActiviteId int NOT NULL,
 	GroupeId int NOT NULL,
 	SalleId int NOT NULL,
@@ -458,7 +457,7 @@ DROP TABLE IF EXISTS Personnes
 GO
 
 CREATE TABLE Personnes (
-	PersonneId int NOT NULL,
+	PersonneId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Prenom varchar(45),
 	Sexe varchar(10),
@@ -476,7 +475,7 @@ DROP TABLE IF EXISTS RapportJournalier
 GO
 
 CREATE TABLE RapportJournalier (
-	RapportId int NOT NULL,
+	RapportId int NOT NULL IDENTITY,
 	[Date] date NOT NULL,
 	Present tinyint,
 	Resume text,
@@ -492,7 +491,7 @@ DROP TABLE IF EXISTS StatutsFacture
 GO
 
 CREATE TABLE StatutsFacture (
-	StatutFactureId int NOT NULL,
+	StatutFactureId int NOT NULL IDENTITY,
 	Libelle varchar(45) NOT NULL
 ); 
 GO
@@ -504,7 +503,7 @@ DROP TABLE IF EXISTS TVAs
 GO
 
 CREATE TABLE TVAs (
-	TVAId int NOT NULL,
+	TVAId int NOT NULL IDENTITY,
 	Nom varchar(45),
 	Valeur float,
 	Visible tinyint NOT NULL
@@ -536,7 +535,7 @@ DROP TABLE IF EXISTS TypesConges
 GO
 
 CREATE TABLE TypesConges (
-	TypeCongeId int NOT NULL,
+	TypeCongeId int NOT NULL IDENTITY,
 	[Type] varchar(50)
 );
 GO
@@ -548,7 +547,7 @@ DROP TABLE IF EXISTS TypesContrat
 GO
 
 CREATE TABLE TypesContrat (
-	TypeContratId int NOT NULL,
+	TypeContratId int NOT NULL IDENTITY,
 	Libelle varchar(45)
 ); 
 GO
@@ -560,7 +559,7 @@ DROP TABLE IF EXISTS TypesGroupe
 GO
 
 CREATE TABLE TypesGroupe (
-	TypeGroupeId int NOT NULL,
+	TypeGroupeId int NOT NULL IDENTITY,
 	Libelle varchar(45)
 ); 
 GO

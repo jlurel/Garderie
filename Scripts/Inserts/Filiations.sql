@@ -1,4 +1,4 @@
-﻿INSERT INTO Garderie.dbo.Filiations (ParentId,EnfantId,LienParente,Visible) VALUES 
+﻿INSERT INTO dbo.Filiations (ParentId,EnfantId,LienParente,Visible) VALUES 
 (8,4,'Pere',1)
 ,(9,4,'Pere',1)
 ,(11,5,'Pere',1)

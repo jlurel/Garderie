@@ -1,9 +1,9 @@
-﻿INSERT INTO Garderie.dbo.CategoriesArticle (CategorieId,Nom,Visible) VALUES 
-(1,'Mobilier',0)
-,(2,'Vetements',1)
-,(3,'Jeux et Jouets',1)
-,(4,'Livres',0)
-,(5,'Accessoires propreté et bain',1)
-,(6,'Alimentation',1)
-,(7,'DVD',1)
+﻿INSERT INTO dbo.CategoriesArticle (Nom,Visible) VALUES 
+('Mobilier',0)
+,('Vetements',1)
+,('Jeux et Jouets',1)
+,('Livres',0)
+,('Accessoires propreté et bain',1)
+,('Alimentation',1)
+,('DVD',1)
 ;

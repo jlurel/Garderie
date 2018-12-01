@@ -1,5 +1,5 @@
-﻿INSERT INTO Garderie.dbo.StatutsFacture (StatutFactureId,Libelle) VALUES 
-(1,'Payée')
-,(2,'En attente de paiement')
-,(3,'En retard')
+﻿INSERT INTO dbo.StatutsFacture (Libelle) VALUES 
+('Payée')
+,('En attente de paiement')
+,('En retard')
 ;

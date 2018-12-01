@@ -1,6 +1,6 @@
-﻿INSERT INTO Garderie.dbo.TVAs (TVAId,Nom,Valeur,Visible) VALUES 
-(1,'Normal',20,1)
-,(2,'Intermediaire',10,1)
-,(3,'Reduit',5.5,1)
-,(4,'Eco participation',12,0)
+﻿INSERT INTO dbo.TVAs (Nom,Valeur,Visible) VALUES 
+('Normal',20,1)
+,('Intermediaire',10,1)
+,('Reduit',5.5,1)
+,('Eco participation',12,0)
 ;

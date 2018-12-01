@@ -86,17 +86,14 @@ namespace Garderie.Controllers
         {
             if (ModelState.IsValid)
             {
-                    Groupe groupe = new Groupe
-                    {
-                        GroupeId = 1,
-                        Descriptif = "Ok",
-                        ReferantId = 2,
-                        TypeGroupeId = 3,
-                        Visible = 1
-                    };
-                    _context.Add(groupe);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                Groupe groupe = new Groupe();
+                groupe.Descriptif = viewModel.Descriptif;
+                groupe.ReferantId = viewModel.Referant;
+                groupe.TypeGroupeId = viewModel.TypeGroupe;
+                groupe.Visible = 1;
+                _context.Add(groupe);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
                
             }
             var createGroupeVM = new CreateGroupeViewModel
@@ -108,7 +105,7 @@ namespace Garderie.Controllers
         }
 
         // GET: Groupes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, EditGroupeViewModel viewModel)
         {
             if (id == null)
             {
@@ -120,9 +117,22 @@ namespace Garderie.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReferantId"] = new SelectList(_context.Employes, "EmployeId", "EmployeId", groupe.ReferantId);
-            ViewData["TypeGroupeId"] = new SelectList(_context.TypesGroupe, "TypeGroupeId", "TypeGroupeId", groupe.TypeGroupeId);
-            return View(groupe);
+
+            var employes = from e in _context.Employes
+                           join p in _context.Personnes on e.EmployeId equals p.PersonneId
+                           select (new
+                           {
+                               EmployeId = e.EmployeId,
+                               Nom = p.Prenom + " " + p.Nom
+                           });
+
+            var editGroupeVM = new EditGroupeViewModel
+            {
+                GroupeId = (int)id,
+                Referants = new SelectList(employes, "EmployeId", "Nom"),
+                TypesGroupe = new SelectList(_context.TypesGroupe, "TypeGroupeId", "Libelle")
+            };
+            return View(editGroupeVM);
         }
 
         // POST: Groupes/Edit/5
@@ -130,9 +140,9 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GroupeId,Descriptif,ReferantId,Visible,TypeGroupeId")] Groupe groupe)
+        public async Task<IActionResult> Edit(int id, EditGroupeViewModel viewModel)
         {
-            if (id != groupe.GroupeId)
+            if (id != viewModel.GroupeId)
             {
                 return NotFound();
             }
@@ -141,12 +151,18 @@ namespace Garderie.Controllers
             {
                 try
                 {
+                    Groupe groupe = new Groupe();
+                    groupe.GroupeId = viewModel.GroupeId;
+                    groupe.Descriptif = viewModel.Descriptif;
+                    groupe.ReferantId = viewModel.Referant;
+                    groupe.TypeGroupeId = viewModel.TypeGroupe;
+                    groupe.Visible = 1;
                     _context.Update(groupe);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GroupeExists(groupe.GroupeId))
+                    if (!GroupeExists(id))
                     {
                         return NotFound();
                     }
@@ -157,9 +173,13 @@ namespace Garderie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReferantId"] = new SelectList(_context.Employes, "EmployeId", "EmployeId", groupe.ReferantId);
-            ViewData["TypeGroupeId"] = new SelectList(_context.TypesGroupe, "TypeGroupeId", "TypeGroupeId", groupe.TypeGroupeId);
-            return View(groupe);
+            var editGroupeVM = new EditGroupeViewModel
+            {
+                GroupeId = (int)id,
+                Referants = new SelectList(await _context.Employes.Include(e => e.Personne).Distinct().ToListAsync(), "EmployeId", "Personne.Nom", viewModel.Referant),
+                TypesGroupe = new SelectList(_context.TypesGroupe, "TypeGroupeId", "Libelle", viewModel.TypeGroupe)
+            };
+            return View(editGroupeVM);
         }
 
         // GET: Groupes/Delete/5

@@ -8,30 +8,17 @@ namespace Garderie.ViewModels
 {
     public class EditGroupeViewModel
     {
-        public EditGroupeViewModel()
-        {
-        }
-
         public int GroupeId { get; set; }
 
         [Required]
-        public String Descriptif
-        {
-            get;
-            set;
-        }
-
+        public String Descriptif { get; set; }
         [Required]
-        public SelectList Referants
-        {
-            get;
-            set;
-        }
-        public Employe Referant { get; set; }
-
+        public int Referant { get; set; }
         [Required]
         [Display(Name = "Type")]
+        public int TypeGroupe { get; set; }
+
+        public SelectList Referants { get; set; }
         public SelectList TypesGroupe { get; set; }
-        public TypeGroupe TypeGroupe { get; set; }
     }
 }
