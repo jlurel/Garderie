@@ -36,7 +36,7 @@ namespace Garderie.Controllers
             var dossierContactUrgence = await _context.DossiersContactUrgence
                 .Include(d => d.Contact)
                 .Include(d => d.DossierInscription)
-                .FirstOrDefaultAsync(m => m.DossierContactUrgenceId == id);
+                .FirstOrDefaultAsync(m => m.ContactId == id);
             if (dossierContactUrgence == null)
             {
                 return NotFound();
@@ -58,7 +58,7 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DossierContactUrgenceId,LienParente,ContactId,Visible,DossierInscriptionId")] DossierContactUrgence dossierContactUrgence)
+        public async Task<IActionResult> Create([Bind("LienParente,ContactId,Visible,DossierInscriptionId")] DossierContactUrgence dossierContactUrgence)
         {
             if (ModelState.IsValid)
             {
@@ -94,9 +94,9 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DossierContactUrgenceId,LienParente,ContactId,Visible,DossierInscriptionId")] DossierContactUrgence dossierContactUrgence)
+        public async Task<IActionResult> Edit(int id, [Bind("LienParente,ContactId,Visible,DossierInscriptionId")] DossierContactUrgence dossierContactUrgence)
         {
-            if (id != dossierContactUrgence.DossierContactUrgenceId)
+            if (id != dossierContactUrgence.ContactId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace Garderie.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DossierContactUrgenceExists(dossierContactUrgence.DossierContactUrgenceId))
+                    if (!DossierContactUrgenceExists(dossierContactUrgence.ContactId))
                     {
                         return NotFound();
                     }
@@ -137,7 +137,7 @@ namespace Garderie.Controllers
             var dossierContactUrgence = await _context.DossiersContactUrgence
                 .Include(d => d.Contact)
                 .Include(d => d.DossierInscription)
-                .FirstOrDefaultAsync(m => m.DossierContactUrgenceId == id);
+                .FirstOrDefaultAsync(m => m.ContactId == id);
             if (dossierContactUrgence == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace Garderie.Controllers
 
         private bool DossierContactUrgenceExists(int id)
         {
-            return _context.DossiersContactUrgence.Any(e => e.DossierContactUrgenceId == id);
+            return _context.DossiersContactUrgence.Any(e => e.ContactId == id);
         }
     }
 }

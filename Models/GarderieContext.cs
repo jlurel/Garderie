@@ -241,9 +241,7 @@ namespace Garderie.Models
 
             modelBuilder.Entity<DossierContactUrgence>(entity =>
             {
-                entity.HasKey(e => e.DossierContactUrgenceId);
-
-                entity.Property(e => e.DossierContactUrgenceId).ValueGeneratedOnAdd();
+                entity.HasKey(e => new { e.ContactId, e.DossierInscriptionId });
 
                 entity.Property(e => e.LienParente)
                     .IsRequired()

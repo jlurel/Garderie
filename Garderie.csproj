@@ -10,4 +10,11 @@
   <ItemGroup>
     <Folder Include="ViewModels\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\DossiersContactsUrgence\Create.cshtml" />
+    <Content Remove="Views\DossiersContactsUrgence\Create.cshtml" />
+  </ItemGroup>
 </Project>

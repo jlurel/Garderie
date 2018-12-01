@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Garderie.Models
 {
@@ -7,11 +9,14 @@ namespace Garderie.Models
     {
         public Groupe()
         {
+            Visible = 1;
             EmployeGroupes = new HashSet<EmployeGroupe>();
             Enfants = new HashSet<Enfant>();
             Participation = new HashSet<Participation>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GroupeId { get; set; }
         public string Descriptif { get; set; }
         public int? ReferantId { get; set; }
