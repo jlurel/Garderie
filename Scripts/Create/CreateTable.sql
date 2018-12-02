@@ -1,7 +1,98 @@
 USE Garderie
 GO
 -- Drop table
+DROP TABLE IF EXISTS AspNetRoleClaims
+GO
 
+CREATE TABLE AspNetRoleClaims (
+	Id int NOT NULL IDENTITY(1,1),
+	RoleId int NOT NULL,
+	ClaimType nvarchar(8000),
+	ClaimValue nvarchar(8000),
+	CONSTRAINT PK_AspNetRoleClaims PRIMARY KEY (Id)
+);
+GO
+
+-- Drop table
+DROP TABLE IF EXISTS AspNetRoles
+GO
+
+CREATE TABLE AspNetRoles (
+	Id int NOT NULL IDENTITY(1,1),
+	Name nvarchar(256),
+	NormalizedName nvarchar(256),
+	ConcurrencyStamp nvarchar(8000)
+);
+GO
+
+-- Drop table
+DROP TABLE IF EXISTS AspNetUserClaims
+GO
+
+CREATE TABLE AspNetUserClaims (
+	Id int NOT NULL IDENTITY(1,1),
+	UserId int NOT NULL,
+	ClaimType nvarchar(8000),
+	ClaimValue nvarchar(8000)
+);
+GO
+
+DROP TABLE IF EXISTS AspNetUserLogins
+GO
+
+CREATE TABLE AspNetUserLogins (
+	LoginProvider nvarchar(450) NOT NULL,
+	ProviderKey nvarchar(450) NOT NULL,
+	ProviderDisplayName nvarchar(8000),
+	UserId int NOT NULL
+);
+GO
+
+DROP TABLE IF EXISTS AspNetUserRoles
+GO
+
+CREATE TABLE AspNetUserRoles (
+	UserId int NOT NULL,
+	RoleId int NOT NULL
+);
+GO
+
+DROP TABLE IF EXISTS AspNetUserTokens
+GO
+
+CREATE TABLE AspNetUserTokens (
+	UserId int NOT NULL,
+	LoginProvider nvarchar(450) NOT NULL,
+	Name nvarchar(450) NOT NULL,
+	Value nvarchar(8000)
+);
+GO
+
+DROP TABLE IF EXISTS AspNetUsers
+GO
+
+CREATE TABLE AspNetUsers (
+	Id int NOT NULL IDENTITY(1,1),
+	UserName nvarchar(256),
+	NormalizedUserName nvarchar(256),
+	Email nvarchar(256),
+	NormalizedEmail nvarchar(256),
+	EmailConfirmed bit NOT NULL,
+	PasswordHash nvarchar(8000),
+	SecurityStamp nvarchar(8000),
+	ConcurrencyStamp nvarchar(8000),
+	PhoneNumber nvarchar(8000),
+	PhoneNumberConfirmed bit NOT NULL,
+	TwoFactorEnabled bit NOT NULL,
+	LockoutEnd datetimeoffset,
+	LockoutEnabled bit NOT NULL,
+	AccessFailedCount int NOT NULL,
+	PersonneId int,
+	Visible tinyint
+);
+GO
+
+-- Drop table
 -- DROP TABLE Garderie.dbo.Activites
 DROP TABLE IF EXISTS Activites
 GO
@@ -77,22 +168,6 @@ GO
 CREATE TABLE CategoriesArticle (
 	CategorieId int NOT NULL IDENTITY,
 	Nom varchar(45),
-	Visible tinyint
-);
-GO
-
--- Drop table
-
--- DROP TABLE Garderie.dbo.ComptesUser
-DROP TABLE IF EXISTS ComptesUser
-GO
-
-CREATE TABLE ComptesUser (
-	UserId int NOT NULL IDENTITY,
-	Login varchar(45),
-	Password varchar(45),
-	Privilege tinyint NOT NULL,
-	PersonneId int NOT NULL,
 	Visible tinyint
 );
 GO

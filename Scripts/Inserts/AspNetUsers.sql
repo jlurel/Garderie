@@ -1,0 +1,3 @@
+﻿INSERT INTO dbo.AspNetUsers (Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,PersonneId,Visible) VALUES 
+(1,'j.doe@example.fr','J.DOE@EXAMPLE.FR','j.doe@example.fr','J.DOE@EXAMPLE.FR',0,'AQAAAAEAACcQAAAAEOs9Gvnyb27QDkAJozWomFFUeFb0Chm6ulCIM+QkEowQJcBjt7Jo2AQPQ1kYF7up3A==','E4WHSLIFGQX2GY6EUIHIGSBPZQZQL6TM','e91bc326-d9b6-48e6-8ca6-7ded236cbe15',NULL,0,0,NULL,1,0,1,NULL)
+;

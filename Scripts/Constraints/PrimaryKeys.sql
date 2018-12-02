@@ -1,6 +1,41 @@
 USE Garderie
 GO
 
+ALTER TABLE AspNetRoleClaims
+ADD
+    CONSTRAINT PK_AspNetRoleClaims PRIMARY KEY (Id);
+GO
+
+ALTER TABLE AspNetRoles
+ADD
+    CONSTRAINT PK_AspNetRoles PRIMARY KEY (Id);
+GO
+
+ALTER TABLE AspNetUserClaims
+ADD
+    CONSTRAINT PK_AspNetUserClaims PRIMARY KEY (Id);
+GO
+
+ALTER TABLE AspNetUserLogins
+ADD
+    CONSTRAINT PK_AspNetUserLogins PRIMARY KEY (LoginProvider,ProviderKey);
+GO
+
+ALTER TABLE AspNetUserRoles
+ADD
+	CONSTRAINT PK_AspNetUserRoles PRIMARY KEY (UserId,RoleId);
+GO
+
+ALTER TABLE AspNetUserTokens
+ADD
+	CONSTRAINT PK_AspNetUserTokens PRIMARY KEY (UserId,LoginProvider,Name);
+GO
+
+ALTER TABLE AspNetUsers
+ADD
+    CONSTRAINT PK_AspNetUsers PRIMARY KEY (Id);
+GO
+
 ALTER TABLE Activites
 ADD CONSTRAINT PK__Activite__BE3FB9853DF1AB3E PRIMARY KEY (ActiviteId);
 GO
@@ -21,11 +56,6 @@ GO
 
 ALTER TABLE CategoriesArticle
 ADD CONSTRAINT PK__Categori__F643ADA6BEC3AFF7 PRIMARY KEY (CategorieId);
-GO
-
-ALTER TABLE ComptesUser
-ADD 
-	CONSTRAINT PK__ComptesU__CB9A1CFFB04D1BAB PRIMARY KEY (UserId);
 GO
 
 ALTER TABLE Conges
