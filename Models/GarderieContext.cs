@@ -1,10 +1,10 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Garderie.Models
 {
-    public class GarderieContext : DbContext
+    public class GarderieContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         public GarderieContext()
         {
@@ -20,7 +20,7 @@ namespace Garderie.Models
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Calendrier> Calendriers { get; set; }
         public virtual DbSet<CategorieArticle> CategoriesArticle { get; set; }
-        public virtual DbSet<CompteUser> ComptesUser { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<Conge> Conges { get; set; }
         public virtual DbSet<ContactUrgence> ContactsUrgence { get; set; }
         public virtual DbSet<DocumentOfficiel> DocumentsOfficiels { get; set; }
@@ -54,9 +54,11 @@ namespace Garderie.Models
         public virtual DbSet<TypeContrat> TypesContrat { get; set; }
         public virtual DbSet<TypeGroupe> TypesGroupe { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            modelBuilder.Entity<Activite>(entity =>
+            base.OnModelCreating(builder);
+
+            builder.Entity<Activite>(entity =>
             {
                 entity.HasKey(e => e.ActiviteId);
 
@@ -75,7 +77,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Adresse>(entity =>
+            builder.Entity<Adresse>(entity =>
             {
                 entity.HasKey(e => e.AdresseId);
 
@@ -106,7 +108,12 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Article>(entity =>
+            builder.Entity<ApplicationUser>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
+            builder.Entity<Article>(entity =>
             {
                 entity.HasKey(e => e.ArticleId);
 
@@ -141,7 +148,7 @@ namespace Garderie.Models
                     .HasConstraintName("Articles_Inventaires_FK");
             });
 
-            modelBuilder.Entity<Calendrier>(entity =>
+            builder.Entity<Calendrier>(entity =>
             {
                 entity.HasKey(e => new { e.CalendrierId, e.EmployeId });
 
@@ -156,7 +163,7 @@ namespace Garderie.Models
                     .HasConstraintName("Calendriers_Employes_FK");
             });
 
-            modelBuilder.Entity<CategorieArticle>(entity =>
+            builder.Entity<CategorieArticle>(entity =>
             {
                 entity.HasKey(e => e.CategorieId);
 
@@ -167,28 +174,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<CompteUser>(entity =>
-            {
-                entity.HasKey(e => e.UserId);
-
-                entity.Property(e => e.UserId).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Login)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.Personne)
-                    .WithMany(p => p.ComptesUser)
-                    .HasForeignKey(d => d.PersonneId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ComptesUser_Personnes_FK");
-            });
-
-            modelBuilder.Entity<Conge>(entity =>
+            builder.Entity<Conge>(entity =>
             {
                 entity.HasKey(e => e.CongeId);
 
@@ -209,7 +195,7 @@ namespace Garderie.Models
                     .HasConstraintName("Conges_TypesConges_FK");
             });
 
-            modelBuilder.Entity<ContactUrgence>(entity =>
+            builder.Entity<ContactUrgence>(entity =>
             {
                 entity.HasKey(e => e.ContactId);
 
@@ -220,7 +206,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<DocumentOfficiel>(entity =>
+            builder.Entity<DocumentOfficiel>(entity =>
             {
                 entity.HasKey(e => e.DocumentId);
 
@@ -239,7 +225,7 @@ namespace Garderie.Models
                     .HasConstraintName("DocumentsOfficiels_DossiersInscription_FK");
             });
 
-            modelBuilder.Entity<DossierContactUrgence>(entity =>
+            builder.Entity<DossierContactUrgence>(entity =>
             {
                 entity.HasKey(e => new { e.ContactId, e.DossierInscriptionId });
 
@@ -261,7 +247,7 @@ namespace Garderie.Models
                     .HasConstraintName("DossiersContactUrgence_DossiersInscription_FK");
             });
 
-            modelBuilder.Entity<DossierEmploye>(entity =>
+            builder.Entity<DossierEmploye>(entity =>
             {
                 entity.HasKey(e => e.DossierId);
 
@@ -282,7 +268,7 @@ namespace Garderie.Models
                     .HasConstraintName("DossiersEmploye_TypesContrat_FK");
             });
 
-            modelBuilder.Entity<DossierInscription>(entity =>
+            builder.Entity<DossierInscription>(entity =>
             {
                 entity.HasKey(e => e.DossierId);
 
@@ -301,7 +287,7 @@ namespace Garderie.Models
                     .HasConstraintName("DossiersInscription_Enfants_FK");
             });
 
-            modelBuilder.Entity<EmployeGroupe>(entity =>
+            builder.Entity<EmployeGroupe>(entity =>
             {
                 entity.HasKey(e => new { e.GroupeId, e.EmployeId });
 
@@ -318,7 +304,7 @@ namespace Garderie.Models
                     .HasConstraintName("EmployeGroupes_Groupes_FK");
             });
 
-            modelBuilder.Entity<Employe>(entity =>
+            builder.Entity<Employe>(entity =>
             {
                 entity.HasKey(e => e.EmployeId);
 
@@ -333,7 +319,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Enfant>(entity =>
+            builder.Entity<Enfant>(entity =>
             {
                 entity.HasKey(e => e.EnfantId);
 
@@ -356,7 +342,7 @@ namespace Garderie.Models
                     .HasConstraintName("Enfants_InventairesEnfant_FK");
             });
 
-            modelBuilder.Entity<Facture>(entity =>
+            builder.Entity<Facture>(entity =>
             {
                 entity.HasKey(e => e.FactureId);
 
@@ -375,7 +361,7 @@ namespace Garderie.Models
                     .HasConstraintName("Factures_StatutsFacture_FK");
             });
 
-            modelBuilder.Entity<FichePaye>(entity =>
+            builder.Entity<FichePaye>(entity =>
             {
                 entity.HasKey(e => e.FichePayeId);
 
@@ -388,7 +374,7 @@ namespace Garderie.Models
                     .HasConstraintName("FichesPaye_DossiersEmploye_FK");
             });
 
-            modelBuilder.Entity<Filiation>(entity =>
+            builder.Entity<Filiation>(entity =>
             {
                 entity.HasKey(e => new { e.ParentId, e.EnfantId });
 
@@ -409,7 +395,7 @@ namespace Garderie.Models
                     .HasConstraintName("Filiations_Parents_FK");
             });
 
-            modelBuilder.Entity<Groupe>(entity =>
+            builder.Entity<Groupe>(entity =>
             {
                 entity.HasKey(e => e.GroupeId);
 
@@ -429,7 +415,7 @@ namespace Garderie.Models
                     .HasConstraintName("Groupes_TypesGroupe_FK");
             });
 
-            modelBuilder.Entity<Horaire>(entity =>
+            builder.Entity<Horaire>(entity =>
             {
                 entity.HasKey(e => new { e.HoraireId, e.CalendrierId });
 
@@ -442,7 +428,7 @@ namespace Garderie.Models
                     .HasConstraintName("Horaires_Calendriers_FK");
             });
 
-            modelBuilder.Entity<Inventaire>(entity =>
+            builder.Entity<Inventaire>(entity =>
             {
                 entity.HasKey(e => e.InventaireId);
 
@@ -455,14 +441,14 @@ namespace Garderie.Models
                     .HasConstraintName("Inventaires_Employes_FK");
             });
 
-            modelBuilder.Entity<InventaireEnfant>(entity =>
+            builder.Entity<InventaireEnfant>(entity =>
             {
                 entity.HasKey(e => e.InventaireId);
 
                 entity.Property(e => e.InventaireId).ValueGeneratedOnAdd();
             });
 
-            modelBuilder.Entity<Lieu>(entity =>
+            builder.Entity<Lieu>(entity =>
             {
                 entity.HasKey(e => e.SalleId);
 
@@ -473,7 +459,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<LigneFacture>(entity =>
+            builder.Entity<LigneFacture>(entity =>
             {
                 entity.HasKey(e => new { e.LigneId, e.FactureId });
 
@@ -488,7 +474,7 @@ namespace Garderie.Models
                     .HasConstraintName("LignesFactures_ObjetsFacturables_FK");
             });
 
-            modelBuilder.Entity<Maladie>(entity =>
+            builder.Entity<Maladie>(entity =>
             {
                 entity.HasKey(e => e.MaladieId);
 
@@ -501,7 +487,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ObjetFacturable>(entity =>
+            builder.Entity<ObjetFacturable>(entity =>
             {
                 entity.HasKey(e => e.ObjetFacturableId);
 
@@ -527,7 +513,7 @@ namespace Garderie.Models
                     .HasConstraintName("ObjetsFacturables_TVAs_FK");
             });
 
-            modelBuilder.Entity<Parent>(entity =>
+            builder.Entity<Parent>(entity =>
             {
                 entity.HasKey(e => e.ParentId);
 
@@ -538,7 +524,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ParentFacture>(entity =>
+            builder.Entity<ParentFacture>(entity =>
             {
                 entity.HasKey(e => new { e.FactureId, e.ParentId });
 
@@ -555,7 +541,7 @@ namespace Garderie.Models
                     .HasConstraintName("ParentsFactures_Parents_FK");
             });
 
-            modelBuilder.Entity<Participation>(entity =>
+            builder.Entity<Participation>(entity =>
             {
                 entity.HasKey(e => new { e.ActiviteId, e.GroupeId, e.SalleId });
 
@@ -580,7 +566,7 @@ namespace Garderie.Models
                     .HasConstraintName("Participation_Lieux_FK");
             });
 
-            modelBuilder.Entity<PersonneAdresse>(entity =>
+            builder.Entity<PersonneAdresse>(entity =>
             {
                 entity.HasKey(e => new { e.AdresseId, e.PersonneId });
 
@@ -597,7 +583,7 @@ namespace Garderie.Models
                     .HasConstraintName("PersonneAdresses_Personnes_FK");
             });
 
-            modelBuilder.Entity<Personne>(entity =>
+            builder.Entity<Personne>(entity =>
             {
                 entity.HasKey(e => e.PersonneId);
 
@@ -626,9 +612,14 @@ namespace Garderie.Models
                 entity.Property(e => e.Sexe)
                     .HasMaxLength(10)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.ApplicationUser)
+                       .WithOne(p => p.Personne)
+                       .HasForeignKey<Personne>(d => d.PersonneId)
+                       .HasConstraintName("AppUser_Personne_FK");
             });
 
-            modelBuilder.Entity<RapportJournalier>(entity =>
+            builder.Entity<RapportJournalier>(entity =>
             {
                 entity.HasKey(e => e.RapportId);
 
@@ -645,7 +636,7 @@ namespace Garderie.Models
                     .HasConstraintName("RapportJournalier_DossiersInscription_FK");
             });
 
-            modelBuilder.Entity<StatutFacture>(entity =>
+            builder.Entity<StatutFacture>(entity =>
             {
                 entity.HasKey(e => e.StatutFactureId);
 
@@ -657,7 +648,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Traitement>(entity =>
+            builder.Entity<Traitement>(entity =>
             {
                 entity.HasKey(e => new { e.MaladieId, e.EnfantId });
 
@@ -686,7 +677,7 @@ namespace Garderie.Models
                     .HasConstraintName("Traitements_Maladies_FK");
             });
 
-            modelBuilder.Entity<Tva>(entity =>
+            builder.Entity<Tva>(entity =>
             {
                 entity.HasKey(e => e.Tvaid);
 
@@ -701,7 +692,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TypeConge>(entity =>
+            builder.Entity<TypeConge>(entity =>
             {
                 entity.HasKey(e => e.TypeCongeId);
 
@@ -712,7 +703,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TypeContrat>(entity =>
+            builder.Entity<TypeContrat>(entity =>
             {
                 entity.HasKey(e => e.TypeContratId);
 
@@ -723,7 +714,7 @@ namespace Garderie.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TypeGroupe>(entity =>
+            builder.Entity<TypeGroupe>(entity =>
             {
                 entity.HasKey(e => e.TypeGroupeId);
 

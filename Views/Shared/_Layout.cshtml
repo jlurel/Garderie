@@ -18,7 +18,7 @@
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
                         <span class="hamb-top"></span>
@@ -27,15 +27,9 @@
                     </button>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input placeholder="Identifiant" type="text" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <input placeholder="Mot de passe" type="text" class="form-control" />
-                        </div>
-                        <input type="submit" class="btn btn-success" value="Valider">
-                    </form>
+                    <ul class="nav navbar-nav">
+                    </ul>
+                    @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
         </nav>

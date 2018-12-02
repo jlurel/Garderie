@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Garderie.Controllers
 {
+    [Authorize]
     public class EmployesController : Controller
     {
         private readonly GarderieContext _context;

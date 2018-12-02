@@ -7,7 +7,6 @@ namespace Garderie.Models
     {
         public Personne()
         {
-            ComptesUser = new HashSet<CompteUser>();
             PersonneAdresses = new HashSet<PersonneAdresse>();
         }
 
@@ -20,7 +19,7 @@ namespace Garderie.Models
         public byte? Visible { get; set; }
         public string Discriminator { get; set; }
 
-        public ICollection<CompteUser> ComptesUser { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public ICollection<PersonneAdresse> PersonneAdresses { get; set; }
     }
 }

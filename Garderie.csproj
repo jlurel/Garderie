@@ -6,15 +6,30 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\AccountViewModels\" />
+    <Folder Include="ViewModels\ManageViewModels\" />
+    <Folder Include="Views\Account\" />
+    <Folder Include="Views\Manage\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />
+    <Compile Remove="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Views\DossiersContactsUrgence\Create.cshtml" />
     <Content Remove="Views\DossiersContactsUrgence\Create.cshtml" />
+    <Content Remove="Views\Account\ExternalLoginConfirmation.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Scripts\Inserts\TypesGroupe.sql" />
+    <None Remove="Scripts\Constraints\PrimaryKeys.sql" />
+    <None Remove="Views\Account\ExternalLoginConfirmation.cshtml.txt" />
+    <None Remove="Views\Account\ExternalLoginFailure.cshtml.txt" />
   </ItemGroup>
 </Project>

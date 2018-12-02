@@ -15,8 +15,6 @@ namespace Garderie.Models
             Participation = new HashSet<Participation>();
         }
 
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int GroupeId { get; set; }
         public string Descriptif { get; set; }
         public int? ReferantId { get; set; }
