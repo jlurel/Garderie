@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Garderie.Models;
 
-namespace Garderie.Models
+namespace Garderie.Data
 {
     public class GarderieContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {

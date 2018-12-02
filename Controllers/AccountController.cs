@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Garderie.Data;
 using Garderie.Models;
 using Garderie.Services;
 using Garderie.ViewModels.AccountViewModels;

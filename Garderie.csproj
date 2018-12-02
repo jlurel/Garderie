@@ -16,6 +16,13 @@
     <Folder Include="ViewModels\ManageViewModels\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Manage\" />
+    <Folder Include="Data\" />
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="ViewModels\GroupeViewModels\" />
+    <Folder Include="Views\Roles\" />
+    <Folder Include="wwwroot\lib\jquery-qubit\" />
+    <Folder Include="wwwroot\lib\jquery-bonsai\" />
+    <Folder Include="wwwroot\lib\jquery-bonsai\assets\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />

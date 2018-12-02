@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Garderie.Data;
 using Garderie.Models;
 using Garderie.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -45,6 +47,8 @@ namespace Garderie
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(options =>
                     {
+                        options.Cookie.HttpOnly = true;
+                        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                         options.AccessDeniedPath = "/AccessDenied";
                         options.LoginPath = "/LogIn";
                         options.LogoutPath = "/LogOut";
@@ -53,10 +57,12 @@ namespace Garderie
                             context.Response.StatusCode = 401;
                             return Task.CompletedTask;
                         };
+                        options.SlidingExpiration = true;
                     });
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddSingleton<IMvcControllerDiscovery, MvcControllerDiscovery>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Microsoft.AspNetCore.Authorization;
+using Garderie.Data;
 
 namespace Garderie.Controllers
 {
