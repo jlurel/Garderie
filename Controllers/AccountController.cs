@@ -88,6 +88,13 @@ namespace Garderie.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         //
         // GET: /Account/Register
         [HttpGet]
@@ -148,6 +155,7 @@ namespace Garderie.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LogOff()
         {
