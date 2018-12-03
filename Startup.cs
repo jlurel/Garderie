@@ -55,16 +55,6 @@ namespace Garderie
                         options.AccessDeniedPath = new PathString("/AccessDenied");
                         options.LoginPath = new PathString("/Login");
                         options.LogoutPath = new PathString("/LogOff");
-                        options.Events.OnRedirectToLogin = (context) =>
-                        {
-                            context.Response.StatusCode = 401;
-                            return Task.CompletedTask;
-                        };
-                        options.Events.OnRedirectToAccessDenied = (context) =>
-                        {
-                            context.Response.StatusCode = 403;
-                            return Task.CompletedTask;
-                        };
                         options.SlidingExpiration = true;
                     });
 
