@@ -429,6 +429,11 @@ body {
     background-color: transparent !important;
 }
 
+.bonsai li input[type="radio"], input[type="checkbox"] {
+    margin-right: 0.5rem !important;
+}
+
+
 /*-------------------------------*/
 /*           Margin              */
 /*-------------------------------*/

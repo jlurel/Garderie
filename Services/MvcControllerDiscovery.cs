@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Garderie.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -15,8 +16,7 @@ namespace Garderie.Services
         private List<MvcControllerInfo> _mvcControllers;
         private readonly IActionDescriptorCollectionProvider _actionDescriptorCollectionProvider;
 
-        public MvcControllerDiscovery
-             (IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
+        public MvcControllerDiscovery(IActionDescriptorCollectionProvider actionDescriptorCollectionProvider)
         {
             _actionDescriptorCollectionProvider = actionDescriptorCollectionProvider;
         }
@@ -27,7 +27,6 @@ namespace Garderie.Services
                 return _mvcControllers;
 
             _mvcControllers = new List<MvcControllerInfo>();
-
             var items = _actionDescriptorCollectionProvider
                 .ActionDescriptors.Items
                 .Where(descriptor => descriptor.GetType() == typeof(ControllerActionDescriptor))
@@ -45,35 +44,45 @@ namespace Garderie.Services
                 var currentController = new MvcControllerInfo
                 {
                     AreaName = controllerTypeInfo.GetCustomAttribute<AreaAttribute>()?.RouteValue,
-                    DisplayName =
-                        controllerTypeInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
+                    DisplayName = controllerTypeInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
                     Name = actionDescriptor.ControllerName,
                 };
 
                 var actions = new List<MvcActionInfo>();
-                foreach (var descriptor in actionDescriptors.GroupBy
-                                            (a => a.ActionName).Select(g => g.First()))
+                foreach (var descriptor in actionDescriptors.GroupBy(a => a.ActionName).Select(g => g.First()))
                 {
                     var methodInfo = descriptor.MethodInfo;
-                    actions.Add(new MvcActionInfo
-                    {
-                        ControllerId = currentController.Id,
-                        Name = descriptor.ActionName,
-                        DisplayName =
-                             methodInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
-                    });
+                    if (IsProtectedAction(controllerTypeInfo, methodInfo))
+                        actions.Add(new MvcActionInfo
+                        {
+                            ControllerId = currentController.Id,
+                            Name = descriptor.ActionName,
+                            DisplayName = methodInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName,
+                        });
                 }
 
-                currentController.Actions = actions;
-                _mvcControllers.Add(currentController);
+                if (actions.Any())
+                {
+                    currentController.Actions = actions;
+                    _mvcControllers.Add(currentController);
+                }
             }
 
             return _mvcControllers;
         }
 
-        IEnumerable<MvcControllerInfo> IMvcControllerDiscovery.GetControllers()
+        private static bool IsProtectedAction(MemberInfo controllerTypeInfo, MemberInfo actionMethodInfo)
         {
-            throw new NotImplementedException();
+            if (actionMethodInfo.GetCustomAttribute<AllowAnonymousAttribute>(true) != null)
+                return false;
+
+            if (controllerTypeInfo.GetCustomAttribute<AuthorizeAttribute>(true) != null)
+                return true;
+
+            if (actionMethodInfo.GetCustomAttribute<AuthorizeAttribute>(true) != null)
+                return true;
+
+            return false;
         }
     }
 }

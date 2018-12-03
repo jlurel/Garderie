@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Garderie.Data;
+using Garderie.Filters;
 using Garderie.Models;
 using Garderie.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -35,7 +36,9 @@ namespace Garderie
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options => options.Filters.Add(typeof(DynamicAuthorizationFilter)))
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddDbContext<GarderieContext>(options =>
                                                    options.UseSqlServer(Configuration.GetConnectionString("Garderie")));
 

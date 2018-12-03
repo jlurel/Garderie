@@ -21,7 +21,8 @@ CREATE TABLE AspNetRoles (
 	Id int NOT NULL IDENTITY(1,1),
 	Name nvarchar(256),
 	NormalizedName nvarchar(256),
-	ConcurrencyStamp nvarchar(8000)
+	ConcurrencyStamp nvarchar(8000),
+	Access nvarchar(8000)
 );
 GO
 

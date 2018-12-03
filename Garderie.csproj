@@ -23,6 +23,8 @@
     <Folder Include="wwwroot\lib\jquery-qubit\" />
     <Folder Include="wwwroot\lib\jquery-bonsai\" />
     <Folder Include="wwwroot\lib\jquery-bonsai\assets\" />
+    <Folder Include="Filters\" />
+    <Folder Include="TagHelpers\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />
