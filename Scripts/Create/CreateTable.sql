@@ -8,8 +8,7 @@ CREATE TABLE AspNetRoleClaims (
 	Id int NOT NULL IDENTITY(1,1),
 	RoleId int NOT NULL,
 	ClaimType nvarchar(8000),
-	ClaimValue nvarchar(8000),
-	CONSTRAINT PK_AspNetRoleClaims PRIMARY KEY (Id)
+	ClaimValue nvarchar(8000)
 );
 GO
 
