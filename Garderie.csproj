@@ -27,6 +27,7 @@
     <Folder Include="TagHelpers\" />
     <Folder Include="ViewModels\ArticleViewModels\" />
     <Folder Include="ViewModels\ParentViewModels\" />
+    <Folder Include="ViewModels\EmployeViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />

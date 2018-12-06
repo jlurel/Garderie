@@ -8,13 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Microsoft.AspNetCore.Authorization;
 using Garderie.Data;
+using Garderie.ViewModels.EmployeViewModels;
+using System.Text.RegularExpressions;
 
 namespace Garderie.Controllers
 {
-    [Authorize]
     public class EmployesController : Controller
     {
         private readonly GarderieContext _context;
+        Regex phoneRegex = new Regex(@"^\(?([0 - 9]{3})\)?[-. ]? ([0 - 9]{3})[-. ]? ([0 - 9]{4})$");
 
         public EmployesController(GarderieContext context)
         {
@@ -24,8 +26,31 @@ namespace Garderie.Controllers
         // GET: Employes
         public async Task<IActionResult> Index()
         {
+            List<IndexEmployeViewModel> employeVMList = new List<IndexEmployeViewModel>();
             var garderieContext = _context.Employes.Include(e => e.Personne);
-            return View(await garderieContext.ToListAsync());
+            var employes = await garderieContext.ToListAsync();
+            foreach(Employe employe in employes)
+            {
+                string externe = "Non";
+                if(employe.Externe == 1)
+                {
+                    externe = "Oui";
+                }
+                IndexEmployeViewModel viewModel = new IndexEmployeViewModel
+                {
+                    EmployeId = employe.EmployeId,
+                    Nom = employe.Personne.Nom,
+                    Prenom = employe.Personne.Prenom,
+                    Sexe = employe.Personne.Sexe,
+                    NumSecu = employe.Personne.NumSecu,
+                    DateNaissance = employe.Personne.DateNaissance,
+                    Telephone = employe.Telephone,
+                    Poste = employe.Poste,
+                    Externe = externe
+                };
+                employeVMList.Add(viewModel);
+            }
+            return View(employeVMList);
         }
 
         // GET: Employes/Details/5
@@ -44,14 +69,33 @@ namespace Garderie.Controllers
                 return NotFound();
             }
 
-            return View(employe);
+            string externe = "Non";
+            if (employe.Externe == 1)
+            {
+                externe = "Oui";
+            }
+
+            DetailsEmployeViewModel detailsEmployeViewModel = new DetailsEmployeViewModel
+            {
+                EmployeId = (int)id,
+                Nom = employe.Personne.Nom,
+                Prenom = employe.Personne.Prenom,
+                Sexe = employe.Personne.Sexe,
+                NumSecu = employe.Personne.NumSecu,
+                DateNaissance = employe.Personne.DateNaissance,
+                Telephone = employe.Telephone,
+                Externe = externe,
+                Poste = employe.Poste
+            };
+
+            return View(detailsEmployeViewModel);
         }
 
         // GET: Employes/Create
         public IActionResult Create()
         {
-            ViewData["EmployeId"] = new SelectList(_context.Personnes, "PersonneId", "PersonneId");
-            return View();
+            CreateEmployeViewModel createEmployeViewModel = new CreateEmployeViewModel();
+            return View(createEmployeViewModel);
         }
 
         // POST: Employes/Create
@@ -59,16 +103,37 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeId,Poste,Externe,Telephone")] Employe employe)
+        public async Task<IActionResult> Create(CreateEmployeViewModel createEmployeViewModel)
         {
             if (ModelState.IsValid)
             {
+                Personne personne = new Personne
+                {
+                    Nom = createEmployeViewModel.Nom,
+                    Prenom = createEmployeViewModel.Prenom,
+                    Sexe = createEmployeViewModel.Sexe,
+                    DateNaissance = createEmployeViewModel.DateNaissance,
+                    NumSecu = createEmployeViewModel.NumSecu,
+                    Discriminator = "Employe"
+                };
+                _context.Add(personne);
+                await _context.SaveChangesAsync();
+
+                string telephone = phoneRegex.Replace(createEmployeViewModel.Telephone, "($1) $2-$3");
+
+                Employe employe = new Employe
+                {
+                    EmployeId = personne.PersonneId,
+                    Personne = personne,
+                    Externe = createEmployeViewModel.Externe,
+                    Poste = createEmployeViewModel.Poste,
+                    Telephone = telephone
+                };
                 _context.Add(employe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeId"] = new SelectList(_context.Personnes, "PersonneId", "PersonneId", employe.EmployeId);
-            return View(employe);
+            return View(createEmployeViewModel);
         }
 
         // GET: Employes/Edit/5
@@ -79,13 +144,25 @@ namespace Garderie.Controllers
                 return NotFound();
             }
 
-            var employe = await _context.Employes.FindAsync(id);
+            var employe = await _context.Employes.Include(e => e.Personne).FirstOrDefaultAsync(e => e.EmployeId == id);
             if (employe == null)
             {
                 return NotFound();
             }
-            ViewData["EmployeId"] = new SelectList(_context.Personnes, "PersonneId", "PersonneId", employe.EmployeId);
-            return View(employe);
+
+            EditEmployeViewModel editEmployeViewModel = new EditEmployeViewModel
+            {
+                EmployeId = (int)id,
+                Nom = employe.Personne.Nom,
+                Prenom = employe.Personne.Prenom,
+                Sexe = employe.Personne.Sexe,
+                NumSecu = employe.Personne.NumSecu,
+                DateNaissance = employe.Personne.DateNaissance,
+                Telephone = employe.Telephone,
+                Externe = (byte)employe.Externe,
+                Poste = employe.Poste
+            };
+            return View(editEmployeViewModel);
         }
 
         // POST: Employes/Edit/5
@@ -93,9 +170,9 @@ namespace Garderie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EmployeId,Poste,Externe,Telephone")] Employe employe)
+        public async Task<IActionResult> Edit(int id, EditEmployeViewModel editEmployeViewModel)
         {
-            if (id != employe.EmployeId)
+            if (id != editEmployeViewModel.EmployeId)
             {
                 return NotFound();
             }
@@ -104,12 +181,35 @@ namespace Garderie.Controllers
             {
                 try
                 {
+                    Personne personne = new Personne
+                    {
+                        PersonneId = id,
+                        Nom = editEmployeViewModel.Nom,
+                        Prenom = editEmployeViewModel.Prenom,
+                        Sexe = editEmployeViewModel.Sexe,
+                        DateNaissance = editEmployeViewModel.DateNaissance,
+                        NumSecu = editEmployeViewModel.NumSecu,
+                        Discriminator = "Employe"
+                    };
+                    _context.Update(personne);
+                    await _context.SaveChangesAsync();
+
+                    string telephone = phoneRegex.Replace(editEmployeViewModel.Telephone, "($1) $2-$3");
+
+                    Employe employe = new Employe
+                    {
+                        EmployeId = id,
+                        Personne = personne,
+                        Externe = editEmployeViewModel.Externe,
+                        Poste = editEmployeViewModel.Poste,
+                        Telephone = telephone
+                    };
                     _context.Update(employe);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeExists(employe.EmployeId))
+                    if (!EmployeExists(editEmployeViewModel.EmployeId))
                     {
                         return NotFound();
                     }
@@ -120,8 +220,7 @@ namespace Garderie.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeId"] = new SelectList(_context.Personnes, "PersonneId", "PersonneId", employe.EmployeId);
-            return View(employe);
+            return View(editEmployeViewModel);
         }
 
         // GET: Employes/Delete/5

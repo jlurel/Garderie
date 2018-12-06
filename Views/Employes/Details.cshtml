@@ -1,7 +1,7 @@
-@model Garderie.Models.Employe
+@model Garderie.ViewModels.EmployeViewModels.DetailsEmployeViewModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Details Employé";
 }
 
 <h2>Details</h2>
@@ -10,6 +10,36 @@
     <h4>Employe</h4>
     <hr />
     <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Prenom)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Prenom)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sexe)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sexe)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateNaissance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateNaissance)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumSecu)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumSecu)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Poste)
         </dt>
@@ -27,12 +57,6 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Telephone)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Personne)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Personne.PersonneId)
         </dd>
     </dl>
 </div>
