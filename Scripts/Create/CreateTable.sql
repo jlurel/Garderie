@@ -7,8 +7,8 @@ GO
 CREATE TABLE AspNetRoleClaims (
 	Id int NOT NULL IDENTITY(1,1),
 	RoleId int NOT NULL,
-	ClaimType nvarchar(8000),
-	ClaimValue nvarchar(8000)
+	ClaimType nvarchar(4000),
+	ClaimValue nvarchar(4000)
 );
 GO
 
@@ -20,8 +20,8 @@ CREATE TABLE AspNetRoles (
 	Id int NOT NULL IDENTITY(1,1),
 	Name nvarchar(256),
 	NormalizedName nvarchar(256),
-	ConcurrencyStamp nvarchar(8000),
-	Access nvarchar(8000)
+	ConcurrencyStamp nvarchar(4000),
+	Access nvarchar(4000)
 );
 GO
 
@@ -32,8 +32,8 @@ GO
 CREATE TABLE AspNetUserClaims (
 	Id int NOT NULL IDENTITY(1,1),
 	UserId int NOT NULL,
-	ClaimType nvarchar(8000),
-	ClaimValue nvarchar(8000)
+	ClaimType nvarchar(4000),
+	ClaimValue nvarchar(4000)
 );
 GO
 
@@ -43,7 +43,7 @@ GO
 CREATE TABLE AspNetUserLogins (
 	LoginProvider nvarchar(450) NOT NULL,
 	ProviderKey nvarchar(450) NOT NULL,
-	ProviderDisplayName nvarchar(8000),
+	ProviderDisplayName nvarchar(4000),
 	UserId int NOT NULL
 );
 GO
@@ -64,7 +64,7 @@ CREATE TABLE AspNetUserTokens (
 	UserId int NOT NULL,
 	LoginProvider nvarchar(450) NOT NULL,
 	Name nvarchar(450) NOT NULL,
-	Value nvarchar(8000)
+	Value nvarchar(4000)
 );
 GO
 
@@ -78,10 +78,10 @@ CREATE TABLE AspNetUsers (
 	Email nvarchar(256),
 	NormalizedEmail nvarchar(256),
 	EmailConfirmed bit NOT NULL,
-	PasswordHash nvarchar(8000),
-	SecurityStamp nvarchar(8000),
-	ConcurrencyStamp nvarchar(8000),
-	PhoneNumber nvarchar(8000),
+	PasswordHash nvarchar(4000),
+	SecurityStamp nvarchar(4000),
+	ConcurrencyStamp nvarchar(4000),
+	PhoneNumber nvarchar(4000),
 	PhoneNumberConfirmed bit NOT NULL,
 	TwoFactorEnabled bit NOT NULL,
 	LockoutEnd datetimeoffset,
