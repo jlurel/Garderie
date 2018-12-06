@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
+using Garderie.ViewModels.ArticleViewModels;
 
 namespace Garderie.Controllers
 {
@@ -22,8 +23,23 @@ namespace Garderie.Controllers
         // GET: Articles
         public async Task<IActionResult> Index()
         {
+            List<IndexArticleViewModel> ArticleVMList = new List<IndexArticleViewModel>();
             var garderieContext = _context.Articles.Include(a => a.Categorie).Include(a => a.EnfantInventaire).Include(a => a.Inventaire);
-            return View(await garderieContext.ToListAsync());
+            var articles = await garderieContext.ToListAsync();
+            foreach(var article in articles)
+            {
+                IndexArticleViewModel viewModel = new IndexArticleViewModel
+                {
+                    ArticleId = article.ArticleId,
+                    Nom = article.Nom,
+                    Quantite = (int)article.Quantite,
+                    Photo = article.Photo,
+                    Description = article.Description,
+                    Categorie = article.Categorie.Nom
+                };
+                ArticleVMList.Add(viewModel);
+            }
+            return View(ArticleVMList);
         }
 
         // GET: Articles/Details/5

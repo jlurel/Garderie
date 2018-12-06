@@ -1,4 +1,4 @@
-@model IEnumerable<Garderie.Models.Article>
+@model IEnumerable<Garderie.ViewModels.ArticleViewModels.IndexArticleViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,19 +22,10 @@
                 @Html.DisplayNameFor(model => model.Photo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Visible)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categorie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EnfantInventaire)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Inventaire)
             </th>
             <th></th>
         </tr>
@@ -49,22 +40,13 @@
                 @Html.DisplayFor(modelItem => item.Quantite)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Photo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Visible)
+                <img src="@Html.DisplayFor(modelItem => item.Photo)" class="img-thumbnail img-responsive center-block" style="width:204px;height:auto;" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Categorie.CategorieId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EnfantInventaire.InventaireId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Inventaire.InventaireId)
+                @Html.DisplayFor(modelItem => item.Categorie)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |

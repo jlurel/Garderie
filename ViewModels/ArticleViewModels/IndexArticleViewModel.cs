@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Garderie.ViewModels.ActiviteViewModels
+namespace Garderie.ViewModels.ArticleViewModels
 {
-    public class IndexActiviteViewModel
+    public class IndexArticleViewModel
     {
         public int ArticleId { get; set; }
         public string Nom { get; set; }

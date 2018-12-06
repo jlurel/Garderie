@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
-using Garderie.ViewModels;
+using Garderie.ViewModels.GroupeViewModels;
 using Garderie.Data;
 
 namespace Garderie.Controllers
@@ -49,15 +49,23 @@ namespace Garderie.Controllers
             }
 
             var groupe = await _context.Groupes
-                .Include(g => g.Referant)
+                .Include(g => g.Referant.Personne)
                 .Include(g => g.TypeGroupe)
                 .FirstOrDefaultAsync(m => m.GroupeId == id);
+            DetailsGroupeViewModel viewModel = new DetailsGroupeViewModel();
             if (groupe == null)
             {
                 return NotFound();
             }
+            else
+            {
+                viewModel.GroupeId = groupe.GroupeId;
+                viewModel.Descriptif = groupe.Descriptif;
+                viewModel.Referant = groupe.Referant.Personne.Prenom + " " + groupe.Referant.Personne.Nom;
+                viewModel.TypeGroupe = groupe.TypeGroupe.Libelle;
+            }
 
-            return View(groupe);
+            return View(viewModel);
         }
 
         // GET: Groupes/Create
@@ -97,7 +105,7 @@ namespace Garderie.Controllers
                 return RedirectToAction(nameof(Index));
                
             }
-            var createGroupeVM = new CreateGroupeViewModel
+            CreateGroupeViewModel createGroupeVM = new CreateGroupeViewModel
             {
                 Referants = new SelectList(await _context.Employes.Include(e => e.Personne).Distinct().ToListAsync(), "EmployeId", "Personne.Nom", viewModel.Referant),
                 TypesGroupe = new SelectList(_context.TypesGroupe, "TypeGroupeId", "Libelle", viewModel.TypeGroupe)
@@ -127,7 +135,7 @@ namespace Garderie.Controllers
                                Nom = p.Prenom + " " + p.Nom
                            });
 
-            var editGroupeVM = new EditGroupeViewModel
+            EditGroupeViewModel editGroupeVM = new EditGroupeViewModel
             {
                 GroupeId = (int)id,
                 Referants = new SelectList(employes, "EmployeId", "Nom"),

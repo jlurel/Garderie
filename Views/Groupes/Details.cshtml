@@ -1,4 +1,4 @@
-@model Garderie.Models.Groupe
+@model Garderie.ViewModels.GroupeViewModels.DetailsGroupeViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -17,22 +17,16 @@
             @Html.DisplayFor(model => model.Descriptif)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Visible)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Visible)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Referant)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Referant.EmployeId)
+            @Html.DisplayFor(model => model.Referant)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.TypeGroupe)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TypeGroupe.TypeGroupeId)
+            @Html.DisplayFor(model => model.TypeGroupe)
         </dd>
     </dl>
 </div>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
+using Garderie.ViewModels.ParentViewModels;
 
 namespace Test.Controllers
 {
@@ -22,7 +23,25 @@ namespace Test.Controllers
         // GET: Parents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Parents.ToListAsync());
+            List<IndexParentViewModel> parentVMList = new List<IndexParentViewModel>();
+            var garderieContext = _context.Parents.Include(p => p.Personne);
+            var parents = await garderieContext.ToListAsync();
+            foreach(var parent in parents)
+            {
+                IndexParentViewModel viewModel = new IndexParentViewModel
+                {
+                    ParentId = parent.ParentId,
+                    Nom = parent.Personne.Nom,
+                    Prenom = parent.Personne.Prenom,
+                    Sexe = parent.Personne.Sexe,
+                    NumSecu = parent.Personne.NumSecu,
+                    DateNaissance = parent.Personne.DateNaissance,
+                    Telephone = parent.Telephone,
+                    NbEnfantsInscrits = parent.NbEnfantsInscrits
+                };
+                parentVMList.Add(viewModel);
+            }
+            return View(parentVMList);
         }
 
         // GET: Parents/Details/5
@@ -54,31 +73,62 @@ namespace Test.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ParentId,NbEnfantsInscrits,Telephone")] Parent parent)
+        public async Task<IActionResult> Create(CreateParentViewModel createParentViewModel)
         {
             if (ModelState.IsValid)
             {
+                Personne personne = new Personne
+                {
+                    Nom = createParentViewModel.Nom,
+                    Prenom = createParentViewModel.Prenom,
+                    Sexe = createParentViewModel.Sexe,
+                    DateNaissance = createParentViewModel.DateNaissance,
+                    NumSecu = createParentViewModel.NumSecu,
+                    Discriminator = "Parent"
+                };
+                _context.Add(personne);
+                await _context.SaveChangesAsync();
+
+                Parent parent = new Parent
+                {
+                    ParentId = personne.PersonneId,
+                    Personne = personne,
+                    Telephone = createParentViewModel.Telephone
+                };
                 _context.Add(parent);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(parent);
+            return View(createParentViewModel);
         }
 
         // GET: Parents/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var parent = await _context.Parents.FindAsync(id);
+            var parent = await _context.Parents.Include(p => p.Personne).FirstOrDefaultAsync(p => p.ParentId == id);
             if (parent == null)
             {
                 return NotFound();
             }
-            return View(parent);
+
+            EditParentViewModel editParentViewModel = new EditParentViewModel
+            {
+                ParentId = (int)id,
+                Nom = parent.Personne.Nom,
+                Prenom = parent.Personne.Prenom,
+                Sexe = parent.Personne.Sexe,
+                DateNaissance = parent.Personne.DateNaissance,
+                NumSecu = parent.Personne.NumSecu,
+                Telephone = parent.Telephone,
+                NbEnfantsInscrits = (int)parent.NbEnfantsInscrits
+            };
+            return View(editParentViewModel);
         }
 
         // POST: Parents/Edit/5
@@ -86,9 +136,9 @@ namespace Test.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ParentId,NbEnfantsInscrits,Telephone")] Parent parent)
+        public async Task<IActionResult> Edit(int id, EditParentViewModel editParentViewModel)
         {
-            if (id != parent.ParentId)
+            if (id != editParentViewModel.ParentId)
             {
                 return NotFound();
             }
@@ -97,12 +147,32 @@ namespace Test.Controllers
             {
                 try
                 {
+                    Personne personne = new Personne
+                    {
+                        PersonneId = id,
+                        Nom = editParentViewModel.Nom,
+                        Prenom = editParentViewModel.Prenom,
+                        Sexe = editParentViewModel.Sexe,
+                        DateNaissance = editParentViewModel.DateNaissance,
+                        NumSecu = editParentViewModel.NumSecu,
+                        Discriminator = "Parent"
+                    };
+                    _context.Update(personne);
+                    await _context.SaveChangesAsync();
+
+                    Parent parent = new Parent
+                    {
+                        ParentId = id,
+                        Personne = personne,
+                        Telephone = editParentViewModel.Telephone,
+                        NbEnfantsInscrits = editParentViewModel.NbEnfantsInscrits
+                    };
                     _context.Update(parent);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ParentExists(parent.ParentId))
+                    if (!ParentExists(editParentViewModel.ParentId))
                     {
                         return NotFound();
                     }
@@ -113,7 +183,7 @@ namespace Test.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(parent);
+            return View(editParentViewModel);
         }
 
         // GET: Parents/Delete/5

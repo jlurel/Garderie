@@ -25,6 +25,8 @@
     <Folder Include="wwwroot\lib\jquery-bonsai\assets\" />
     <Folder Include="Filters\" />
     <Folder Include="TagHelpers\" />
+    <Folder Include="ViewModels\ArticleViewModels\" />
+    <Folder Include="ViewModels\ParentViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />

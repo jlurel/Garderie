@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Garderie.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Garderie.ViewModels
+namespace Garderie.ViewModels.GroupeViewModels
 {
     public class EditGroupeViewModel
     {

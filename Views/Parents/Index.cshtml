@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Garderie.Models.Parent>
+﻿@model IEnumerable<Garderie.ViewModels.ParentViewModels.IndexParentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,6 +13,21 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateNaissance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumSecu)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NbEnfantsInscrits)
             </th>
             <th>
@@ -24,6 +39,21 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateNaissance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumSecu)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NbEnfantsInscrits)
             </td>

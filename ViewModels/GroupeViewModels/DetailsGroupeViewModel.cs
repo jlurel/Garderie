@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Garderie.ViewModels.GroupeViewModels
 {
-    public class IndexGroupeViewModel
+    public class DetailsGroupeViewModel
     {
         public int GroupeId { get; set; }
         public string Descriptif { get; set; }
