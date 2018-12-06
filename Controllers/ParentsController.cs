@@ -26,7 +26,7 @@ namespace Test.Controllers
             List<IndexParentViewModel> parentVMList = new List<IndexParentViewModel>();
             var garderieContext = _context.Parents.Include(p => p.Personne);
             var parents = await garderieContext.ToListAsync();
-            foreach(var parent in parents)
+            foreach(Parent parent in parents)
             {
                 IndexParentViewModel viewModel = new IndexParentViewModel
                 {
@@ -36,8 +36,7 @@ namespace Test.Controllers
                     Sexe = parent.Personne.Sexe,
                     NumSecu = parent.Personne.NumSecu,
                     DateNaissance = parent.Personne.DateNaissance,
-                    Telephone = parent.Telephone,
-                    NbEnfantsInscrits = parent.NbEnfantsInscrits
+                    Telephone = parent.Telephone
                 };
                 parentVMList.Add(viewModel);
             }
@@ -52,14 +51,50 @@ namespace Test.Controllers
                 return NotFound();
             }
 
-            var parent = await _context.Parents
-                .FirstOrDefaultAsync(m => m.ParentId == id);
+            var parent = await _context.Parents.Include(p => p.Personne)
+                                       .FirstOrDefaultAsync(p => p.ParentId == id);
             if (parent == null)
             {
                 return NotFound();
             }
+            var filiations = from f in _context.Filiations
+                                        join e in _context.Enfants on f.EnfantId equals e.EnfantId
+                                        join p in _context.Personnes on e.EnfantId equals p.PersonneId
+                                        where f.ParentId == id
+                                        select (new Enfant
+                                        {
+                                           EnfantId = e.EnfantId,
+                                           Photo = e.Photo,
+                                           GroupeId = e.GroupeId,
+                                           InventaireEnfantId = e.InventaireEnfantId,
+                                           Personne = new Personne
+                                           {
+                                               Nom = p.Nom,
+                                               Prenom = p.Prenom,
+                                               NumSecu = p.NumSecu,
+                                               Sexe = p.Sexe,
+                                               DateNaissance = p.DateNaissance,
+                                               Discriminator = p.Discriminator,
+                                               Visible = p.Visible
+                                           }
+                                        });
+            DetailsParentViewModel detailsParentViewModel = new DetailsParentViewModel
+            {
+                ParentId = (int)id,
+                Nom = parent.Personne.Nom,
+                Prenom = parent.Personne.Prenom,
+                Sexe = parent.Personne.Sexe,
+                NumSecu = parent.Personne.NumSecu,
+                DateNaissance = parent.Personne.DateNaissance,
+                Telephone = parent.Telephone
+            };
 
-            return View(parent);
+            foreach (var enfant in filiations)
+            {
+                detailsParentViewModel.Filiations.Add(enfant);
+            }
+
+            return View(detailsParentViewModel);
         }
 
         // GET: Parents/Create
