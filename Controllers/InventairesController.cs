@@ -75,7 +75,7 @@ namespace Garderie.Controllers
 
             foreach (Article article in articles)
             {
-                detailsParentViewModel.articles.Add(article);
+                detailsParentViewModel.Articles.Add(article);
             }
 
             if (inventaire == null)

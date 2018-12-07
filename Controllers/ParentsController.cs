@@ -231,7 +231,9 @@ namespace Test.Controllers
 
             var parent = await _context.Parents
                 .FirstOrDefaultAsync(m => m.ParentId == id);
-            if (parent == null)
+            var personne = await _context.Personnes
+                .FirstOrDefaultAsync(m => m.PersonneId == id);
+            if (parent == null || personne == null)
             {
                 return NotFound();
             }
@@ -247,6 +249,17 @@ namespace Test.Controllers
             var parent = await _context.Parents.FindAsync(id);
             _context.Parents.Remove(parent);
             await _context.SaveChangesAsync();
+
+            var user = await _context.ApplicationUsers
+                .FirstOrDefaultAsync(m => m.PersonneId == id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+
+            var personne = await _context.Personnes.FindAsync(id);
+            _context.Personnes.Remove(personne);
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 

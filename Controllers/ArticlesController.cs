@@ -60,6 +60,30 @@ namespace Garderie.Controllers
                 return NotFound();
             }
 
+            var enfants = from e in _context.Enfants
+                          join p in _context.Personnes on e.EnfantId equals p.PersonneId
+                          join ie in _context.InventairesEnfant on e.InventaireEnfantId equals ie.InventaireId
+                          join a in _context.Articles on ie.InventaireId equals a.EnfantInventaireId
+                          where a.ArticleId == id
+                          select (new Enfant
+                          {
+                              EnfantId = e.EnfantId,
+                              Photo = e.Photo,
+                              GroupeId = e.GroupeId,
+                              InventaireEnfantId = e.InventaireEnfantId,
+                              Personne = new Personne
+                              {
+                                  PersonneId = p.PersonneId,
+                                  Nom = p.Nom,
+                                  Prenom = p.Prenom,
+                                  NumSecu = p.NumSecu,
+                                  Sexe = p.Sexe,
+                                  DateNaissance = p.DateNaissance,
+                                  Discriminator = p.Discriminator,
+                                  Visible = p.Visible
+                              }
+                          });
+
 
             DetailsArticleViewModel detailsArticleViewModel = new DetailsArticleViewModel
             {
@@ -67,12 +91,14 @@ namespace Garderie.Controllers
                 Nom = article.Nom,
                 Quantite = (int)article.Quantite,
                 Photo = article.Photo,
-                Visible = (byte)article.Visible,
                 Description = article.Description,
-                EnfantInventaireId = article.EnfantInventaireId,
                 Categorie = article.Categorie.Nom
             };
 
+            foreach(var enfant in enfants)
+            {
+                detailsArticleViewModel.Enfants.Add(enfant);
+            }
 
             return View(detailsArticleViewModel);
 

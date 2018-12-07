@@ -80,7 +80,7 @@ namespace Garderie.Controllers
 
             foreach (var article in articles)
             {
-                detailsCategorieArticleViewModel.articles.Add(article);
+                detailsCategorieArticleViewModel.Articles.Add(article);
             }
 
             return View(detailsCategorieArticleViewModel);

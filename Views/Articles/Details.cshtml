@@ -29,16 +29,46 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EnfantInventaireId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EnfantInventaireId)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Photo)
         </dt>
         <dd>
             <img src="@Html.DisplayFor(model => model.Photo)" class="img-thumbnail img-responsive center-block" style="width:204px;height:auto;" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Enfants)
+        </dt>
+        <dd>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Prenom
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Enfants)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Personne.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Personne.Prenom)
+                </td>
+                <td>
+                    <a asp-controller="Enfants" asp-action="Edit" asp-route-id="@item.EnfantId">Edit</a> |
+                    <a asp-controller="Enfants" asp-action="Details" asp-route-id="@item.EnfantId">Details</a> |
+                    <a asp-controller="Enfants" asp-action="Delete" asp-route-id="@item.EnfantId">Delete</a>
+                </td>
+            </tr>
+}
+                </tbody>
+            </table>
         </dd>
     </dl>
 </div>

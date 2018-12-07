@@ -10,12 +10,12 @@ namespace Garderie.ViewModels.InventairesViewModels
     {
         public DetailsInventairesViewModel()
         {
-            articles = new HashSet<Article>();
+            Articles = new HashSet<Article>();
         }
         public int InventaireId { get; set; }
         public int? StockMax { get; set; }
         public int? StockActuel { get; set; }
         public string Nom { get; set; }
-        public ICollection<Article> articles { get; set; }
+        public ICollection<Article> Articles { get; set; }
     }
 }

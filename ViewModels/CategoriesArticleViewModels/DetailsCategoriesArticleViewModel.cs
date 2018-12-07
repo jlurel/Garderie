@@ -10,11 +10,11 @@ namespace Garderie.ViewModels.CategoriesArticleViewModels
     {
         public DetailsCategoriesArticleViewModel()
         {
-            articles = new HashSet<Article>();
+            Articles = new HashSet<Article>();
         }
         public int CategorieId { get; set; }
         public string Nom { get; set; }
 
-        public ICollection<Article> articles { get; set; }
+        public ICollection<Article> Articles { get; set; }
     }
 }

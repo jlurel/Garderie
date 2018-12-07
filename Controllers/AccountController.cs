@@ -102,14 +102,17 @@ namespace Garderie.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             var personnes = from p in _context.Personnes
+                            where p.Discriminator == "Parent" || p.Discriminator == "Employe"
                             select (new
                             {
                                 PersonneId = p.PersonneId,
                                 Nom = p.Prenom + " " + p.Nom
                             });
-            var viewModel = new RegisterViewModel();
-            viewModel.Personnes = new SelectList(personnes, "PersonneId", "Nom");
-            viewModel.ReturnUrl = returnUrl;
+            var viewModel = new RegisterViewModel
+            {
+                Personnes = new SelectList(personnes, "PersonneId", "Nom"),
+                ReturnUrl = returnUrl
+            };
             return View(viewModel);
         }
 
@@ -141,6 +144,7 @@ namespace Garderie.Controllers
             }
 
             var personnes = from p in _context.Personnes
+                            where p.Discriminator == "Parent" || p.Discriminator == "Employe"
                             select (new
                             {
                                 PersonneId = p.PersonneId,
