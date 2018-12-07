@@ -10,7 +10,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\AccountViewModels\" />
     <Folder Include="ViewModels\ManageViewModels\" />
@@ -25,7 +24,6 @@
     <Folder Include="wwwroot\lib\jquery-bonsai\assets\" />
     <Folder Include="Filters\" />
     <Folder Include="TagHelpers\" />
-    <Folder Include="ViewModels\ArticleViewModels\" />
     <Folder Include="ViewModels\ParentViewModels\" />
     <Folder Include="ViewModels\EmployeViewModels\" />
     <Folder Include="ViewModels\FactureViewModels\" />

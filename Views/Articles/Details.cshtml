@@ -1,4 +1,4 @@
-@model Garderie.Models.Article
+@model Garderie.ViewModels.ArticleViewModels.DetailsArticleViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -23,40 +23,22 @@
             @Html.DisplayFor(model => model.Quantite)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Visible)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Visible)
-        </dd>
-        <dt>
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Categorie)
+            @Html.DisplayNameFor(model => model.EnfantInventaireId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Categorie.CategorieId)
+            @Html.DisplayFor(model => model.EnfantInventaireId)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EnfantInventaire)
+            @Html.DisplayNameFor(model => model.Photo)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EnfantInventaire.InventaireId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Inventaire)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Inventaire.InventaireId)
+            <img src="@Html.DisplayFor(model => model.Photo)" class="img-thumbnail img-responsive center-block" style="width:204px;height:auto;" />
         </dd>
     </dl>
 </div>

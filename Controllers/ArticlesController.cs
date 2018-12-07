@@ -60,7 +60,22 @@ namespace Garderie.Controllers
                 return NotFound();
             }
 
-            return View(article);
+
+            DetailsArticleViewModel detailsArticleViewModel = new DetailsArticleViewModel
+            {
+                ArticleId = article.ArticleId,
+                Nom = article.Nom,
+                Quantite = (int)article.Quantite,
+                Photo = article.Photo,
+                Visible = (byte)article.Visible,
+                Description = article.Description,
+                EnfantInventaireId = article.EnfantInventaireId,
+                Categorie = article.Categorie.Nom
+            };
+
+
+            return View(detailsArticleViewModel);
+
         }
 
         // GET: Articles/Create
