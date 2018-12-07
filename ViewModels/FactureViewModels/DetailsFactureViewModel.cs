@@ -14,10 +14,12 @@ namespace Garderie.ViewModels.FactureViewModels
 
         public int FactureId { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Date d'émission")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateEmission { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Date de paiement")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DatePaiement { get; set; }
