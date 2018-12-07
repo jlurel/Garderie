@@ -17,6 +17,7 @@ namespace Garderie.ViewModels.ParentViewModels
         [DataType(DataType.Date)]
         [Display(Name = "Date de naissance")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Range(typeof(DateTime), "1/1/1930", "1/1/2000")]
         public DateTime? DateNaissance { get; set; }
         [Required]
         [Display(Name = "Numéro de sécurité sociale")]
