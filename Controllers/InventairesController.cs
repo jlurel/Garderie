@@ -59,6 +59,7 @@ namespace Garderie.Controllers
                            where a.InventaireId == id
                            select (new Article
                            {
+                               ArticleId = a.ArticleId,
                                Nom = a.Nom,
                                Quantite = a.Quantite,
                                Photo = a.Photo
