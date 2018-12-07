@@ -8,7 +8,7 @@ namespace Garderie.Models
         public DossierInscription()
         {
             DocumentsOfficiels = new HashSet<DocumentOfficiel>();
-            DossiersContactUrgence = new HashSet<DossierContactUrgence>();
+           //DossiersContactUrgence = new HashSet<DossierContactUrgence>();
             RapportJournalier = new HashSet<RapportJournalier>();
         }
 
@@ -22,7 +22,7 @@ namespace Garderie.Models
 
         public Enfant Enfant { get; set; }
         public ICollection<DocumentOfficiel> DocumentsOfficiels { get; set; }
-        public ICollection<DossierContactUrgence> DossiersContactUrgence { get; set; }
+        //public ICollection<DossierContactUrgence> DossiersContactUrgence { get; set; }
         public ICollection<RapportJournalier> RapportJournalier { get; set; }
     }
 }

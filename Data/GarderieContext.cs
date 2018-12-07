@@ -24,7 +24,6 @@ namespace Garderie.Data
         public virtual DbSet<Conge> Conges { get; set; }
         public virtual DbSet<ContactUrgence> ContactsUrgence { get; set; }
         public virtual DbSet<DocumentOfficiel> DocumentsOfficiels { get; set; }
-        public virtual DbSet<DossierContactUrgence> DossiersContactUrgence { get; set; }
         public virtual DbSet<DossierEmploye> DossiersEmploye { get; set; }
         public virtual DbSet<DossierInscription> DossiersInscription { get; set; }
         public virtual DbSet<EmployeGroupe> EmployeGroupes { get; set; }
@@ -225,27 +224,27 @@ namespace Garderie.Data
                     .HasConstraintName("DocumentsOfficiels_DossiersInscription_FK");
             });
 
-            builder.Entity<DossierContactUrgence>(entity =>
-            {
-                entity.HasKey(e => new { e.ContactId, e.DossierInscriptionId });
+            //builder.Entity<DossierContactUrgence>(entity =>
+            //{
+            //    entity.HasKey(e => new { e.ContactId, e.DossierInscriptionId });
 
-                entity.Property(e => e.LienParente)
-                    .IsRequired()
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+            //    entity.Property(e => e.LienParente)
+            //        .IsRequired()
+            //        .HasMaxLength(20)
+            //        .IsUnicode(false);
 
-                entity.HasOne(d => d.Contact)
-                    .WithMany(p => p.DossiersContactUrgence)
-                    .HasForeignKey(d => d.ContactId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("DossiersContactUrgence_ContactsUrgence_FK");
+            //    entity.HasOne(d => d.Contact)
+            //        .WithMany(p => p.DossiersContactUrgence)
+            //        .HasForeignKey(d => d.ContactId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("DossiersContactUrgence_ContactsUrgence_FK");
 
-                entity.HasOne(d => d.DossierInscription)
-                    .WithMany(p => p.DossiersContactUrgence)
-                    .HasForeignKey(d => d.DossierInscriptionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("DossiersContactUrgence_DossiersInscription_FK");
-            });
+            //    entity.HasOne(d => d.DossierInscription)
+            //        .WithMany(p => p.DossiersContactUrgence)
+            //        .HasForeignKey(d => d.DossierInscriptionId)
+            //        .OnDelete(DeleteBehavior.ClientSetNull)
+            //        .HasConstraintName("DossiersContactUrgence_DossiersInscription_FK");
+            //});
 
             builder.Entity<DossierEmploye>(entity =>
             {

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Garderie.Models;
 using Garderie.Data;
+using Garderie.ViewModels.EnfantViewModels;
+using Garderie.Models;
 
 namespace Test.Controllers
 {
@@ -38,26 +39,80 @@ namespace Test.Controllers
                 return NotFound();
             }
 
+            var filiations = from f in _context.Filiations
+                             join e in _context.Parents on f.ParentId equals e.ParentId
+                             join p in _context.Personnes on e.ParentId equals p.PersonneId
+                             where f.EnfantId == id
+                             select (new Parent
+                             {
+                                 ParentId = e.ParentId,
+                                 NbEnfantsInscrits = e.NbEnfantsInscrits,
+                                 Telephone = e.Telephone,
+                                 Personne = new Personne
+                                 {
+                                     Nom = p.Nom,
+                                     Prenom = p.Prenom,
+                                     NumSecu = p.NumSecu,
+                                     Sexe = p.Sexe,
+                                     DateNaissance = p.DateNaissance,
+                                     Discriminator = p.Discriminator,
+                                     Visible = p.Visible
+                                 }
+                             });
+
+            //var contacts_urgences = from d in _context.ContactsUrgence
+            //join cont in _context.ContactsUrgence on d.ContactId equals cont.ContactId
+            //join c in _context.Personnes on d.ContactId equals c.PersonneId
+            //join doss in _context.DossiersInscription on d.DossierInscriptionId equals doss.DossierId
+            //where doss.EnfantId == id;
+
             var enfant = await _context.Enfants
-                .Include(e => e.Groupe)
-                .Include(e => e.Groupe.TypeGroupe)
-                .Include(e => e.InventaireEnfant)
-                .Include(e => e.Personne)
-                .FirstOrDefaultAsync(m => m.EnfantId == id);
+            .Include(e => e.Groupe)
+            .Include(e => e.Groupe.TypeGroupe)
+            .Include(e => e.InventaireEnfant)
+            .Include(e => e.Personne)
+            .FirstOrDefaultAsync(m => m.EnfantId == id);
+
             if (enfant == null)
             {
                 return NotFound();
             }
 
-            return View(enfant);
+            DetailsEnfantViewModel detailsEnfantViewModel = new DetailsEnfantViewModel()
+            {
+                EnfantId = enfant.EnfantId,
+                Nom = enfant.Personne.Nom,
+                Prenom = enfant.Personne.Prenom,
+                Sexe = enfant.Personne.Sexe,
+                NumSecu = enfant.Personne.NumSecu,
+                DateNaissance = enfant.Personne.DateNaissance,
+                Photo = enfant.Photo,
+                Groupe = enfant.Groupe
+            };
+
+            //foreach (var contact in contacts_urgences)
+            //{
+            //    detailsEnfantViewModel.DossierContactUrgences.Add(contact);
+            //}
+
+            foreach (var parent in filiations)
+            {
+                detailsEnfantViewModel.Filiations.Add(parent);
+            }
+
+            return View(detailsEnfantViewModel);
         }
 
         // GET: Enfants/Create
         public IActionResult Create()
         {
-            ViewData["GroupeId"] = new SelectList(_context.Groupes, "GroupeId", "GroupeId");
-            ViewData["InventaireEnfantId"] = new SelectList(_context.InventairesEnfant, "InventaireId", "InventaireId");
-            return View();
+            //ViewData["GroupeId"] = new SelectList(_context.Groupes, "GroupeId", "GroupeId");
+            //ViewData["InventaireEnfantId"] = new SelectList(_context.InventairesEnfant, "InventaireId", "InventaireId");
+
+            var createEnfantVM = new CreateEnfantViewModel();
+            createEnfantVM.Groupes = new SelectList(_context.Groupes, "GroupeId", "Descriptif");
+
+            return View(createEnfantVM);
         }
 
         // POST: Enfants/Create
@@ -65,10 +120,48 @@ namespace Test.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfantId,Photo,GroupeId,InventaireEnfantId")] Enfant enfant)
+        public async Task<IActionResult> Create(CreateEnfantViewModel createEnfantViewModel)
         {
+            Personne personne = new Personne
+            {
+                Nom = createEnfantViewModel.Nom,
+                Prenom = createEnfantViewModel.Prenom,
+                Sexe = createEnfantViewModel.Sexe,
+                DateNaissance = createEnfantViewModel.DateNaissance,
+                NumSecu = createEnfantViewModel.NumSecu,
+                Discriminator = "Enfant",
+                Visible = 1
+            };
+
+            var groupe = await _context.Groupes.FirstOrDefaultAsync(m => m.GroupeId == createEnfantViewModel.GroupeId);
+            Groupe groupeModel = new Groupe()
+            {
+                GroupeId = groupe.GroupeId,
+                Descriptif = groupe.Descriptif
+            };
+
+            InventaireEnfant InventaireEnfant = new InventaireEnfant()
+            {
+
+            };
+
+            Enfant enfant = new Enfant()
+            {
+                Photo = createEnfantViewModel.Photo,
+                GroupeId = groupeModel.GroupeId
+
+            };
+
             if (ModelState.IsValid)
             {
+                _context.Add(personne);
+                await _context.SaveChangesAsync();
+
+                _context.Add(InventaireEnfant);
+                await _context.SaveChangesAsync();
+
+                enfant.InventaireEnfantId = InventaireEnfant.InventaireId;
+                enfant.EnfantId = personne.PersonneId;
                 _context.Add(enfant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,14 +179,34 @@ namespace Test.Controllers
                 return NotFound();
             }
 
-            var enfant = await _context.Enfants.FindAsync(id);
+            //var enfant = await _context.Enfants.Include(e => e.Personne).FirstOrDefaultAsync(e => e.EnfantId == id);
+            var enfant = await _context.Enfants
+                .Include(e => e.Groupe)
+                .Include(e => e.Groupe.TypeGroupe)
+                .Include(e => e.InventaireEnfant)
+                .Include(e => e.Personne)
+                .FirstOrDefaultAsync(m => m.EnfantId == id);
+
             if (enfant == null)
             {
                 return NotFound();
             }
-            ViewData["GroupeId"] = new SelectList(_context.Groupes, "GroupeId", "GroupeId", enfant.GroupeId);
-            ViewData["InventaireEnfantId"] = new SelectList(_context.InventairesEnfant, "InventaireId", "InventaireId", enfant.InventaireEnfantId);
-            return View(enfant);
+
+            EditEnfantViewModel editEnfantViewModel = new EditEnfantViewModel()
+            {
+                EnfantId = enfant.EnfantId,
+                Nom = enfant.Personne.Nom,
+                Prenom = enfant.Personne.Prenom,
+                Sexe = enfant.Personne.Sexe,
+                NumSecu = enfant.Personne.NumSecu,
+                DateNaissance = enfant.Personne.DateNaissance,
+                Photo = enfant.Photo,
+                Groupe = enfant.Groupe
+            };
+
+            //ViewData["GroupeId"] = new SelectList(_context.Groupes, "GroupeId", "GroupeId", enfant.GroupeId);
+            //ViewData["InventaireEnfantId"] = new SelectList(_context.InventairesEnfant, "InventaireId", "InventaireId", enfant.InventaireEnfantId);
+            return View(editEnfantViewModel);
         }
 
         // POST: Enfants/Edit/5
@@ -101,12 +214,17 @@ namespace Test.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfantId,Photo,GroupeId,InventaireEnfantId")] Enfant enfant)
+        public async Task<IActionResult> Edit(int id, EditEnfantViewModel editEnfantViewModel)
         {
-            if (id != enfant.EnfantId)
+            if (id != editEnfantViewModel.EnfantId)
             {
                 return NotFound();
             }
+
+            Enfant enfant = new Enfant()
+            {
+
+            };
 
             if (ModelState.IsValid)
             {

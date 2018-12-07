@@ -10,6 +10,7 @@ namespace Garderie.ViewModels.EmployeViewModels
         public string Prenom { get; set; }
         public string Sexe { get; set; }
         public string Poste { get; set; }
+        [DataType(DataType.Date)]
         [Display(Name = "Date de naissance")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateNaissance { get; set; }

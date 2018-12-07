@@ -28,7 +28,7 @@ namespace Garderie.Controllers
             List<IndexParentViewModel> parentVMList = new List<IndexParentViewModel>();
             var garderieContext = _context.Parents.Include(p => p.Personne);
             var parents = await garderieContext.ToListAsync();
-            foreach(Parent parent in parents)
+            foreach (Parent parent in parents)
             {
                 IndexParentViewModel viewModel = new IndexParentViewModel
                 {
@@ -59,27 +59,29 @@ namespace Garderie.Controllers
             {
                 return NotFound();
             }
+
             var filiations = from f in _context.Filiations
-                                        join e in _context.Enfants on f.EnfantId equals e.EnfantId
-                                        join p in _context.Personnes on e.EnfantId equals p.PersonneId
-                                        where f.ParentId == id
-                                        select (new Enfant
-                                        {
-                                           EnfantId = e.EnfantId,
-                                           Photo = e.Photo,
-                                           GroupeId = e.GroupeId,
-                                           InventaireEnfantId = e.InventaireEnfantId,
-                                           Personne = new Personne
-                                           {
-                                               Nom = p.Nom,
-                                               Prenom = p.Prenom,
-                                               NumSecu = p.NumSecu,
-                                               Sexe = p.Sexe,
-                                               DateNaissance = p.DateNaissance,
-                                               Discriminator = p.Discriminator,
-                                               Visible = p.Visible
-                                           }
-                                        });
+                             join e in _context.Enfants on f.EnfantId equals e.EnfantId
+                             join p in _context.Personnes on e.EnfantId equals p.PersonneId
+                             where f.ParentId == id
+                             select (new Enfant
+                             {
+                                 EnfantId = e.EnfantId,
+                                 Photo = e.Photo,
+                                 GroupeId = e.GroupeId,
+                                 InventaireEnfantId = e.InventaireEnfantId,
+                                 Personne = new Personne
+                                 {
+                                     Nom = p.Nom,
+                                     Prenom = p.Prenom,
+                                     NumSecu = p.NumSecu,
+                                     Sexe = p.Sexe,
+                                     DateNaissance = p.DateNaissance,
+                                     Discriminator = p.Discriminator,
+                                     Visible = p.Visible
+                                 }
+                             });
+
             DetailsParentViewModel detailsParentViewModel = new DetailsParentViewModel
             {
                 ParentId = (int)id,

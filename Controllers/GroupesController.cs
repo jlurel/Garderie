@@ -81,7 +81,6 @@ namespace Garderie.Controllers
                                 Nom = p.Prenom + " " + p.Nom
                            });
 
-
             var createGroupeVM = new CreateGroupeViewModel();
             createGroupeVM.Referants = new SelectList(employes, "EmployeId", "Nom");
             createGroupeVM.TypesGroupe = new SelectList(_context.TypesGroupe, "TypeGroupeId", "Libelle");
