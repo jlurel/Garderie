@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
+using Garderie.ViewModels.FactureViewModels;
 
 namespace Garderie.Controllers
 {
@@ -44,7 +45,39 @@ namespace Garderie.Controllers
                 return NotFound();
             }
 
-            return View(facture);
+            var parents = from p in _context.Parents
+                          join pf in _context.ParentsFactures on p.ParentId equals pf.ParentId
+                          join pe in _context.Personnes on p.ParentId equals pe.PersonneId
+                          where pf.FactureId == id
+                          select (new Parent
+                          {
+                              ParentId = (int)p.ParentId,
+                              Telephone = p.Telephone,
+                              Personne = new Personne
+                              {
+                                  PersonneId = pe.PersonneId,
+                                  Nom = pe.Nom,
+                                  Prenom = pe.Prenom,
+                                  NumSecu = pe.NumSecu,
+                                  Sexe = pe.Sexe,
+                                  DateNaissance = pe.DateNaissance,
+                                  Discriminator = pe.Discriminator,
+                                  Visible = pe.Visible
+                              }
+                          });
+            DetailsFactureViewModel detailsFactureViewModel = new DetailsFactureViewModel
+            {
+                FactureId = (int)id,
+                DateEmission = facture.DateEmission,
+                DatePaiement = facture.DatePaiement,
+                MontantTtc = facture.MontantTtc,
+                StatutFacture = facture.StatutFacture.Libelle
+            };
+            foreach(var parent in parents)
+            {
+                detailsFactureViewModel.Parents.Add(parent);
+            }
+            return View(detailsFactureViewModel);
         }
 
         // GET: Factures/Create
