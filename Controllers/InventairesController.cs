@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
+using Garderie.ViewModels.InventairesViewModels;
 
 namespace Garderie.Controllers
 {
@@ -22,8 +23,25 @@ namespace Garderie.Controllers
         // GET: Inventaires
         public async Task<IActionResult> Index()
         {
-            var garderieContext = _context.Inventaires.Include(i => i.Employe);
-            return View(await garderieContext.ToListAsync());
+            List<IndexInventairesViewModel> inventaireVMList = new List<IndexInventairesViewModel>();
+            var garderieContext = _context.Inventaires.Include(i => i.Employe.Personne);
+            var inventaires = await garderieContext.ToListAsync();
+
+            foreach (Inventaire inventaire in inventaires)
+            {
+                IndexInventairesViewModel viewModel = new IndexInventairesViewModel
+                {
+                    InventaireId = inventaire.InventaireId,
+                    StockMax = inventaire.StockMax,
+                    StockActuel = inventaire.StockActuel,
+                    Nom = inventaire.Employe.Personne.Prenom + " " + inventaire.Employe.Personne.Nom,
+                };
+                if (inventaire.Visible == 1)
+                {
+                    inventaireVMList.Add(viewModel);
+                }
+            }
+            return View(inventaireVMList);
         }
 
         // GET: Inventaires/Details/5
@@ -35,14 +53,36 @@ namespace Garderie.Controllers
             }
 
             var inventaire = await _context.Inventaires
-                .Include(i => i.Employe)
+                .Include(i => i.Employe.Personne)
                 .FirstOrDefaultAsync(m => m.InventaireId == id);
+            var articles = from a in _context.Articles
+                           where a.InventaireId == id
+                           select (new Article
+                           {
+                               Nom = a.Nom,
+                               Quantite = a.Quantite,
+                               Photo = a.Photo
+                           });
+
+            DetailsInventairesViewModel detailsParentViewModel = new DetailsInventairesViewModel
+            {
+                InventaireId = (int)id,
+                StockMax = inventaire.StockMax,
+                StockActuel = inventaire.StockActuel,
+                Nom = inventaire.Employe.Personne.Prenom + " " + inventaire.Employe.Personne.Nom,
+            };
+
+            foreach (Article article in articles)
+            {
+                detailsParentViewModel.articles.Add(article);
+            }
+
             if (inventaire == null)
             {
                 return NotFound();
             }
 
-            return View(inventaire);
+            return View(detailsParentViewModel);
         }
 
         // GET: Inventaires/Create

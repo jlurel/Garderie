@@ -1,4 +1,4 @@
-@model IEnumerable<Garderie.Models.Inventaire>
+@model IEnumerable<Garderie.ViewModels.InventairesViewModels.IndexInventairesViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,10 +19,7 @@
                 @Html.DisplayNameFor(model => model.StockActuel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Visible)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employe)
+                @Html.DisplayNameFor(model => model.Nom)
             </th>
             <th></th>
         </tr>
@@ -37,10 +34,8 @@
                 @Html.DisplayFor(modelItem => item.StockActuel)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Visible)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employe.EmployeId)
+                @Html.DisplayFor(modelItem => item.Nom)
+                
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.InventaireId">Edit</a> |
