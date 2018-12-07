@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
 using Garderie.ViewModels.ArticleViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Garderie.Controllers
 {
+    [Authorize]
     public class ArticlesController : Controller
     {
         private readonly GarderieContext _context;
@@ -42,6 +44,12 @@ namespace Garderie.Controllers
             {
                 var categorie = _context.CategoriesArticle.FirstOrDefault(ca => ca.Nom == CategorieArticle).CategorieId;
                 articles = articles.Where(x => x.CategorieId == categorie);
+            }
+
+            if(!articles.Any())
+            {
+                articles = from a in garderieContext
+                           select a;
             }
 
             foreach (var article in articles)

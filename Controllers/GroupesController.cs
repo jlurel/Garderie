@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.ViewModels.GroupeViewModels;
 using Garderie.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Garderie.Controllers
 {
+    [Authorize]
     public class GroupesController : Controller
     {
         private readonly GarderieContext _context;

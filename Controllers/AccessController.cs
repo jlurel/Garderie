@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Garderie.Controllers
 {
-    [Authorize]
+
     [DisplayName("Access Management")]
     public class AccessController : Controller
     {

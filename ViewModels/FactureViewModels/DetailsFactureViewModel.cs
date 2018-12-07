@@ -28,6 +28,7 @@ namespace Garderie.ViewModels.FactureViewModels
         [Display(Name = "Statut")]
         public string StatutFacture { get; set; }
 
+        [Display(Name = "Destinataire(s)")]
         public ICollection<Parent> Parents { get; set; }
     }
 }

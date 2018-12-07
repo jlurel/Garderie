@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
 using Garderie.ViewModels.FactureViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Garderie.Controllers
 {
+    [Authorize]
     public class FacturesController : Controller
     {
         private readonly GarderieContext _context;

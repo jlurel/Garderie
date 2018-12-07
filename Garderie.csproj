@@ -27,6 +27,7 @@
     <Folder Include="ViewModels\ParentViewModels\" />
     <Folder Include="ViewModels\EmployeViewModels\" />
     <Folder Include="ViewModels\FactureViewModels\" />
+    <Folder Include="Views\Access\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />

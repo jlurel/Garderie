@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
 using Garderie.ViewModels.InventairesViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Garderie.Controllers
 {
+    [Authorize]
     public class InventairesController : Controller
     {
         private readonly GarderieContext _context;

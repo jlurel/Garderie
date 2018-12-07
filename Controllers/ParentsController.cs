@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
 using Garderie.ViewModels.ParentViewModels;
+using Microsoft.AspNetCore.Authorization;
 
-namespace Test.Controllers
+namespace Garderie.Controllers
 {
+    [Authorize]
     public class ParentsController : Controller
     {
         private readonly GarderieContext _context;

@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace Garderie.Controllers
 {
+    [Authorize]
     public class EmployesController : Controller
     {
         private readonly GarderieContext _context;

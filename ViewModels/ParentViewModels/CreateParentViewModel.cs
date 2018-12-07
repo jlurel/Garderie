@@ -13,6 +13,7 @@ namespace Garderie.ViewModels.ParentViewModels
         [Required]
         public string Sexe { get; set; }
         [Required]
+        [DataType(DataType.Date)]
         [Display(Name = "Date de naissance")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateNaissance { get; set; }
