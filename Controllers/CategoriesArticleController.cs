@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garderie.Models;
 using Garderie.Data;
+using Garderie.ViewModels.CategoriesArticleViewModels;
 
 namespace Garderie.Controllers
 {
@@ -22,7 +23,23 @@ namespace Garderie.Controllers
         // GET: CategoriesArticle
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CategoriesArticle.ToListAsync());
+            List<IndexCategoriesArticleViewModel> categoriesArticleVMList = new List<IndexCategoriesArticleViewModel>();
+
+            var categories = await _context.CategoriesArticle.ToListAsync();
+            foreach (CategorieArticle categorie in categories)
+            {
+                IndexCategoriesArticleViewModel viewModel = new IndexCategoriesArticleViewModel
+                {
+                    CategorieId = categorie.CategorieId,
+                    Nom = categorie.Nom
+
+                };
+                if (categorie.Visible == 1)
+                {
+                    categoriesArticleVMList.Add(viewModel);
+                }
+            }
+            return View(categoriesArticleVMList);
         }
 
         // GET: CategoriesArticle/Details/5
@@ -34,14 +51,43 @@ namespace Garderie.Controllers
             }
 
             var categorieArticle = await _context.CategoriesArticle
-                .FirstOrDefaultAsync(m => m.CategorieId == id);
+               .FirstOrDefaultAsync(m => m.CategorieId == id);
             if (categorieArticle == null)
             {
                 return NotFound();
             }
 
-            return View(categorieArticle);
+            var articles = from a in _context.Articles
+                           join ca in _context.CategoriesArticle
+                           on a.CategorieId equals ca.CategorieId
+                           where a.CategorieId == id
+                           select (new Article
+                           {
+                               ArticleId = a.ArticleId,
+                               Nom = a.Nom,
+                               Quantite = a.Quantite,
+                               Photo = a.Photo,
+                               Description = a.Description,
+                               InventaireId = a.InventaireId,
+                               EnfantInventaireId = a.EnfantInventaireId
+                           });
+
+            DetailsCategoriesArticleViewModel detailsCategorieArticleViewModel = new DetailsCategoriesArticleViewModel
+            {
+                CategorieId = categorieArticle.CategorieId,
+                Nom = categorieArticle.Nom
+            };
+
+            foreach (var article in articles)
+            {
+                detailsCategorieArticleViewModel.articles.Add(article);
+            }
+
+            return View(detailsCategorieArticleViewModel);
         }
+
+
+
 
         // GET: CategoriesArticle/Create
         public IActionResult Create()

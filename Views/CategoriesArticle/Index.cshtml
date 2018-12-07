@@ -1,4 +1,4 @@
-@model IEnumerable<Garderie.Models.CategorieArticle>
+@model IEnumerable<Garderie.ViewModels.CategoriesArticleViewModels.IndexCategoriesArticleViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,27 +15,24 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nom)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Visible)
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Visible)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CategorieId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CategorieId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CategorieId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CategorieId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CategorieId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CategorieId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

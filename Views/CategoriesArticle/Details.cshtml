@@ -1,4 +1,4 @@
-@model Garderie.Models.CategorieArticle
+@model Garderie.ViewModels.CategoriesArticleViewModels.DetailsCategoriesArticleViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -17,11 +17,56 @@
             @Html.DisplayFor(model => model.Nom)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Visible)
+            @Html.DisplayNameFor(model => model.articles)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Visible)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Nom
+                        </th>
+                        <th>
+                            Quantite
+                        </th>
+                        <th>
+                            Photo
+                        </th>
+                        <th>
+                            Description
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.articles)
+                    {
+                        <tr>
+                            <td class="col-md-2">
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                            <td class="col-md-1">
+                                @Html.DisplayFor(modelItem => item.Quantite)
+                            </td>
+                            <td class="col-md-2">
+                                <img src="@Html.DisplayFor(modelItem => item.Photo)" class="img-thumbnail img-responsive center-block" style="width:204px;height:auto;" />
+                            </td>
+                            <td class="col-md-3">
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+
+                            <td class="col-md-2">
+                                <a asp-action="Edit" asp-route-id="@item.ArticleId">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.ArticleId">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ArticleId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </dd>
+
     </dl>
 </div>
 <div>
