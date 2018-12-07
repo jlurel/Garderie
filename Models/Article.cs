@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Garderie.Models
 {
@@ -7,6 +8,7 @@ namespace Garderie.Models
     {
         public int ArticleId { get; set; }
         public string Nom { get; set; }
+        [Display(Name = "Quantité")]
         public int? Quantite { get; set; }
         public string Photo { get; set; }
         public byte? Visible { get; set; }

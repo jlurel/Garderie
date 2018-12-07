@@ -9,6 +9,18 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index">
+    <p>
+
+        Catégorie: <select name="CategorieArticle" asp-items="Model.First().Categories">
+            <option value="">All</option>
+        </select>
+        Mot clé: <input type="text" name="MotCle">
+        <input type="submit" value="Rechercher" />
+    </p>
+</form>
+
 <div class="row">
     <div class="table-responsive">
         <table class="table table-striped table-bordered">

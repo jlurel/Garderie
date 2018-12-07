@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Garderie.ViewModels.ArticleViewModels
 {
@@ -13,5 +14,8 @@ namespace Garderie.ViewModels.ArticleViewModels
         public string Description { get; set; }
         [Display(Name = "Catégorie")]
         public string Categorie { get; set; }
+        public string MotCle { get; set; }
+
+        public SelectList Categories { get; set; }
     }
 }

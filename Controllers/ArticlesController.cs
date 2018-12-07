@@ -21,12 +21,30 @@ namespace Garderie.Controllers
         }
 
         // GET: Articles
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string MotCle, string CategorieArticle)
         {
             List<IndexArticleViewModel> ArticleVMList = new List<IndexArticleViewModel>();
             var garderieContext = _context.Articles.Include(a => a.Categorie).Include(a => a.EnfantInventaire).Include(a => a.Inventaire);
-            var articles = await garderieContext.ToListAsync();
-            foreach(var article in articles)
+            var articles = from a in garderieContext
+                           select a;
+
+            IQueryable<string> categories = from ca in _context.CategoriesArticle
+                                            join a in garderieContext on ca.CategorieId equals a.CategorieId
+                                            orderby ca.CategorieId
+                                            select ca.Nom;
+
+            if (!String.IsNullOrEmpty(MotCle))
+            {
+                articles = articles.Where(s => s.Nom.Contains(MotCle) || s.Description.Contains(MotCle));
+            }
+
+            if (!String.IsNullOrEmpty(CategorieArticle))
+            {
+                var categorie = _context.CategoriesArticle.FirstOrDefault(ca => ca.Nom == CategorieArticle).CategorieId;
+                articles = articles.Where(x => x.CategorieId == categorie);
+            }
+
+            foreach (var article in articles)
             {
                 IndexArticleViewModel viewModel = new IndexArticleViewModel
                 {
@@ -35,7 +53,8 @@ namespace Garderie.Controllers
                     Quantite = (int)article.Quantite,
                     Photo = article.Photo,
                     Description = article.Description,
-                    Categorie = article.Categorie.Nom
+                    Categorie = article.Categorie.Nom,
+                    Categories = new SelectList(categories.Distinct().ToList())
                 };
                 ArticleVMList.Add(viewModel);
             }
