@@ -27,27 +27,7 @@
     <Folder Include="ViewModels\ParentViewModels\" />
     <Folder Include="ViewModels\EmployeViewModels\" />
     <Folder Include="ViewModels\FactureViewModels\" />
-<<<<<<< Updated upstream
     <Folder Include="Views\Access\" />
-=======
     <Folder Include="ViewModels\EnfantViewModels\" />
->>>>>>> Stashed changes
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Controllers\DossiersContactsUrgenceController.cs" />
-    <Compile Remove="ViewModels\ManageViewModels.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Views\DossiersContactsUrgence\Create.cshtml" />
-    <Content Remove="Views\DossiersContactsUrgence\Create.cshtml" />
-    <Content Remove="Views\Account\ExternalLoginConfirmation.json" />
-    <Content Remove="Views\DossiersContactsUrgence\Delete.cshtml" />
-    <Content Remove="Views\DossiersContactsUrgence\Details.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Scripts\Inserts\TypesGroupe.sql" />
-    <None Remove="Scripts\Constraints\PrimaryKeys.sql" />
-    <None Remove="Views\Account\ExternalLoginConfirmation.cshtml.txt" />
-    <None Remove="Views\Account\ExternalLoginFailure.cshtml.txt" />
-  </ItemGroup>
+    </ItemGroup>
 </Project>
