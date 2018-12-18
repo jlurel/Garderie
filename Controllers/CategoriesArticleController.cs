@@ -23,22 +23,24 @@ namespace Garderie.Controllers
         // GET: CategoriesArticle
         public async Task<IActionResult> Index()
         {
+            ServiceReference2.GarderieServiceClient serv = new ServiceReference2.GarderieServiceClient();
+            ServiceReference2.Categorie[] categories =  serv.GetAllCategoriesAsync().Result;
+            
+
             List<IndexCategoriesArticleViewModel> categoriesArticleVMList = new List<IndexCategoriesArticleViewModel>();
 
-            var categories = await _context.CategoriesArticle.ToListAsync();
-            foreach (CategorieArticle categorie in categories)
+            //var categories = await _context.CategoriesArticle.ToListAsync();
+            foreach(ServiceReference2.Categorie categorie in categories)
             {
                 IndexCategoriesArticleViewModel viewModel = new IndexCategoriesArticleViewModel
                 {
-                    CategorieId = categorie.CategorieId,
-                    Nom = categorie.Nom
+                    CategorieId = categorie.idCategorie,
+                    Nom = categorie.nom
 
                 };
-                if (categorie.Visible == 1)
-                {
-                    categoriesArticleVMList.Add(viewModel);
-                }
+                categoriesArticleVMList.Add(viewModel);
             }
+
             return View(categoriesArticleVMList);
         }
 

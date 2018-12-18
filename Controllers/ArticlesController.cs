@@ -27,8 +27,12 @@ namespace Garderie.Controllers
         {
             List<IndexArticleViewModel> ArticleVMList = new List<IndexArticleViewModel>();
             var garderieContext = _context.Articles.Include(a => a.Categorie).Include(a => a.EnfantInventaire).Include(a => a.Inventaire);
-            var articles = from a in garderieContext
-                           select a;
+            /*var articles = from a in garderieContext
+                           select a;*/
+
+            ServiceReference2.GarderieServiceClient serv = new ServiceReference2.GarderieServiceClient();
+            var articles = serv.GetAllArticlesAsync().Result;
+
 
             IQueryable<string> categories = from ca in _context.CategoriesArticle
                                             join a in garderieContext on ca.CategorieId equals a.CategorieId
@@ -37,31 +41,30 @@ namespace Garderie.Controllers
 
             if (!String.IsNullOrEmpty(MotCle))
             {
-                articles = articles.Where(s => s.Nom.Contains(MotCle) || s.Description.Contains(MotCle));
+                articles = articles.Where(s => s.nom.Contains(MotCle) || s.Description.Contains(MotCle)).ToArray();
             }
 
             if (!String.IsNullOrEmpty(CategorieArticle))
             {
                 var categorie = _context.CategoriesArticle.FirstOrDefault(ca => ca.Nom == CategorieArticle).CategorieId;
-                articles = articles.Where(x => x.CategorieId == categorie);
+                articles = articles.Where(x => x.Categorie.idCategorie == categorie).ToArray();
             }
 
             if(!articles.Any())
             {
-                articles = from a in garderieContext
-                           select a;
+                articles = serv.GetAllArticlesAsync().Result;
             }
 
             foreach (var article in articles)
             {
                 IndexArticleViewModel viewModel = new IndexArticleViewModel
                 {
-                    ArticleId = article.ArticleId,
-                    Nom = article.Nom,
-                    Quantite = (int)article.Quantite,
+                    ArticleId = article.idArticle,
+                    Nom = article.nom,
+                    Quantite = (int)article.quantite,
                     Photo = article.Photo,
                     Description = article.Description,
-                    Categorie = article.Categorie.Nom,
+                    Categorie = article.Categorie.nom,
                     Categories = new SelectList(categories.Distinct().ToList())
                 };
                 ArticleVMList.Add(viewModel);
